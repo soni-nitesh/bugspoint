@@ -1,14 +1,14 @@
 <template>
 <!-- Navbar  -->
     <v-layout >
-        <v-toolbar >
+        <v-toolbar dark class='indigo darken-4' >
             <v-toolbar-side-icon  @click.stop="drawer = !drawer" class="hidden-md-and-up"></v-toolbar-side-icon>
             <v-toolbar-title>Bug's point</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-toolbar-items class="hidden-sm-and-down">
             <v-btn flat class='text-none' to='/' router>Home</v-btn>
-            <v-btn class='text-none' to='/about' router flat>About</v-btn>
-            <v-btn class='text-none' to='/login' router flat>login</v-btn>
+            <v-btn class='text-none' to='/about' router flat>About Us</v-btn>
+            <v-btn class='text-none' to='/login' router flat>Login</v-btn>
             <v-btn class='text-none' to='/signin' router flat>Sign in</v-btn>
             <v-btn class='text-none' to='/contact' router flat>Contact us</v-btn>
             </v-toolbar-items>
