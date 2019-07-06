@@ -14,7 +14,7 @@
                 <!-- input name -->
                 <v-text-field
                 v-model="name"
-                :counter="10"
+                :counter="20"
                 :rules="nameRules"
                 label="Name"
                 required
@@ -87,12 +87,12 @@ import HTTP from '../http'
           this.sendData() ;
         }
       },
-      async sendData(){
-      return HTTP().post("/login",{
-      email : this.user_name ,
-      password  : this.password 
-   }).then(({data})=>{
-     console.log(data.username)
+       sendData(){
+      return HTTP().post("/register",{
+      email:this.email,
+      password:this.password,
+      name:this.name,
+      mobile:this.phone
    })
       }
     }

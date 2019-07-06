@@ -3,6 +3,9 @@ import './plugins/vuetify'
 import App from './App.vue';
 import router from './router';
 import store from './store';
+import { sync } from 'vuex-router-sync' ; 
+Vue.config.productionTip = false;
+sync(store,router);
 
 Vue.config.productionTip = false;
 
