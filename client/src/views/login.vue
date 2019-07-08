@@ -3,10 +3,10 @@
     <v-flex md6 xs10 offset-md3 offset-xs1>
          <v-card >
         <v-card-title primary-title> 
-            <div class="headline">REGISTER</div>
+            <div class="headline">LOGIN</div>
         </v-card-title>
             <v-card-text>
-            <v-form
+            <v-form 
                 ref="form"
                 v-model="valid"
                 lazy-validation
@@ -19,7 +19,7 @@
                 label="Name"
                 required
                 ></v-text-field>
-                             <!-- input phone number -->
+                <!-- input phone number -->
                 <v-text-field
                 v-model="phone"
                 :rules="phoneRules"
@@ -33,7 +33,6 @@
                 label="E-mail"
                 required
                 ></v-text-field>
-               
                 <!-- input password -->
                 <v-text-field
                 v-model="password"
