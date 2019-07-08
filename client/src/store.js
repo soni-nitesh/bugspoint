@@ -7,7 +7,8 @@ export default new Vuex.Store({
   state: {
     baseURL : "http://localhost:3333",
     login : true,
-    logout: false
+    logout: false,
+    accessToken: null,
   },
   mutations: {
     login_logout(state){
@@ -20,11 +21,17 @@ export default new Vuex.Store({
         state.logout = false 
         state.login =  true 
       }
-    }
+    },
+    updateAccessToken: (state, accessToken) => {
+      state.accessToken = accessToken;
+    },
   },
   actions: {
     login_logout( context){
       context.commit('login_logout');
-    }
+    },
+    fetchAccessToken({ commit }) {
+      commit('updateAccessToken', localStorage.getItem('token'));
+    },
   },
 });
