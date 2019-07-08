@@ -11,6 +11,7 @@
                 v-model="valid"
                 lazy-validation
             >
+<<<<<<< HEAD
                 <!-- input name -->
                 <v-text-field
                 v-model="name"
@@ -20,9 +21,10 @@
                 required
                 ></v-text-field>
                              <!-- input phone number -->
-   <!-- input phone number -->
+=======
+                <!-- input phone number -->
                 <v-content>
-
+>>>>>>> de03b8d001c185ffd6919c0973b465afe51902e5
                 <v-text-field
                 v-model="phone"
                 :rules="phoneRules"
@@ -38,8 +40,11 @@
                 label="E-mail"
                 required
                 ></v-text-field>
-
+<<<<<<< HEAD
+               
+=======
                  </v-content>
+>>>>>>> de03b8d001c185ffd6919c0973b465afe51902e5
                 <!-- input password -->
                 <v-content>
                 <v-text-field
