@@ -30,6 +30,7 @@
                 required
                 ></v-text-field>
                 </v-content>
+                
                 <!-- input email address -->
                 <v-content>
                 <v-text-field

@@ -7,12 +7,6 @@ class UserController {
 
     async register({request , session, response})
     {
-        
-         console.log(request.input('name'));
-        console.log(request.input('email'));
-        console.log(request.input('password'));
-        console.log(request.input('mobile'));
-    //    return "test";
     //         const validation =  await validateAll(request.all(),{
     //       name: 'required',
     //       email: 'required|unique:users,email',
@@ -40,50 +34,28 @@ class UserController {
            user.save();
            return user;
         
-    }
-      
-    
-      async login({auth, request, session, reponse}){
-       
-         if(request.input('email')){    
-           //const validation =  await validateAll(request.all(),{
-           //         email: 'required',
-           //         password: 'required'
-           //     })
-           //       if (validation.fail()){
-            //        session.withErrors(validation.message()).flashExcept(['password'])
-           //        return "email failed"
-           //    }
-         console.log("email");
-        let {
-              email,
-              password
-            } = request.all();
+    }   
 
+      async login({auth, request, session, reponse}){
+            var log = request.input('log')
+            let user = await User.findBy('email', log);
+         user = user.toJSON();
+         console.log(user.email);
+         console.log(log)
+         if(user.email == log){       
+            console.log(log)
+        let email = request.input('log');
+          let password = request.input('password');
+            
              const token = await auth.attempt(email, password)
-                 return token;
+             console.log(token);
+             return token;
       
              } 
- 
-           if(request.input('mobile')){    
-         //     const validation =  await validateAll(request.all(),{
-         //         mobile: 'required',
-         //         password: 'required'
-         //     })
-        //       if (validation.fail()){
-          //        session.withErrors(validation.message()).flashExcept(['password'])
-         //        return "mobile failed"
-         //    }
-         console.log("mobile");
-         let {
-             mobile,
-             password
-         } = request.all();
-        
-            const token = await auth.attempt(mobile, password)
-                return token;
-      
-           } 
+             else {
+                 console.log('not found');
+             }
+    } 
         }  
-    }  
+    
 module.exports = UserController

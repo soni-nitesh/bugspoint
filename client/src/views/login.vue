@@ -11,21 +11,11 @@
                 v-model="valid"
                 lazy-validation
             >
-                <!-- input phone number -->
-                <v-content>
-                <v-text-field
-                v-model="phone"
-                :rules="phoneRules"
-                label="Phone"
-                required
-                ></v-text-field>
-                </v-content>
                 <!-- input email address -->
                 <v-content>
                 <v-text-field
-                v-model="email"
-                :rules="emailRules"
-                label="E-mail"
+                v-model="log"
+                label="Phone Or Email"
                 required
                 ></v-text-field>
                  </v-content>
@@ -33,12 +23,11 @@
                 <v-content>
                 <v-text-field
                 v-model="password"
-                :rules="passwordRules"
                 label="password"
                 required
                 ></v-text-field>   
                    </v-content>
-                <v-btn :disabled="!valid" color="success" >
+                <v-btn @click="sendData" color="success" >
                 Login
                 </v-btn>
             </v-form>
@@ -55,46 +44,21 @@ import HTTP from '../http'
   export default {
     data: () => ({
       valid: true,
-      phone: '',
-      phoneRules: [
-        v => !!v || 'Phone Number is required',
-        v => (v && v.length == 10) || 'Phone Number should be 10 number'
-      ],
-      email: '',
-      emailRules: [
-        v => !!v || 'E-mail is required',
-        v => /.+@.+/.test(v) || 'E-mail must be valid'
-      ],
+      log:'',
       password: '',
-      passwordRules: [
-        v => !!v || 'Password is required',
-        v => (v && v.length >= 4) || 'password must be greater than 4 characters'
-      ],
     }),
 
     methods: {
-      // validate () {
-      //   if (this.$refs.form.validate()) {
-      //     this.snackbar = true
-      //     this.sendData() ;
-      //   }
-      // },
        sendData(){
-         if(this.phone){
+         console.log('test');
       return HTTP().post("/login",{
       //email:this.email,
       password:this.password,
-      mobile:this.phone,
+      log:this.log,
      
    }) }
-    if(this.email){
-      return HTTP().post("/login",{
-      email:this.email,
-      password:this.password,
-     // mobile:this.phone,
-     
-   }) }
-      console.log('test') }
+    
+    
     }
   }
 </script>
