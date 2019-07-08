@@ -1,18 +1,30 @@
 'use strict'
 
-//const {validateAll} = use('validator')
+const {validateAll} = use('validator')
 const User = use('App/Models/User')
 
 class UserController {
 
     async register({request , session, response}){
-        const user  = new User()
-        user.name = request.input('name')
-        user.email = request.input('email')
-        user.password = request.input('password')
-        user.mobile = request.input('mobile')
-        await user.save() ;
-        console.log('dgh');
+
+      const validation = await validate(request.all(),{
+        email: 'required|email|unique:users,email',
+        mobile: 'required|mobile|unique:users,mobile',
+        password: 'required'
+        })
+        if(validation.fails()){
+            session.withErrors(validation.messages()).flashAll();
+            return response.redirect('back');
+        }
+        const user  = new User();
+        user.name = request.input('name');
+        user.mobile = request.input('mobile');
+        user.email = request.input('email');
+        user.password = request.input('password');
+        
+        await user.save()
+       
+       return 0 
       }
 }
     
