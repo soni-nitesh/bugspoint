@@ -4,8 +4,6 @@ const {validateAll} = use('validator')
 const User = use('App/Models/User')
 
 class UserController {
-
-<<<<<<< HEAD
     async register({request , session, response}){
 
       const validation = await validate(request.all(),{
@@ -28,7 +26,6 @@ class UserController {
        return 0 
       }
 }
-=======
     async register({request , session, response})
     {
         
@@ -65,9 +62,7 @@ class UserController {
            return user;
         
     }
-      
->>>>>>> de03b8d001c185ffd6919c0973b465afe51902e5
-    
+
       async login({auth, request, session, reponse}){
        
          if(request.input('email')){    
@@ -110,5 +105,5 @@ class UserController {
       
            } 
         }  
-    }  
+    
 module.exports = UserController
