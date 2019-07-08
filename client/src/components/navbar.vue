@@ -8,8 +8,9 @@
             <v-toolbar-items class="hidden-sm-and-down">
             <v-btn flat class='text-none' to='/' router>Home</v-btn>
             <v-btn class='text-none' to='/about' router flat>About Us</v-btn>
-            <v-btn class='text-none' to='/login' router flat>Login</v-btn>
-            <v-btn class='text-none' to='/signin' router flat>Sign in</v-btn>
+            <v-btn class='text-none' to='/login'  v-if='login' router flat>Login</v-btn>
+            <v-btn class='text-none' @click='logout_function' v-if='logout' flat>Logout</v-btn>
+            <v-btn class='text-none' to='/signup' v-if='login' router flat>Sign up</v-btn>
             <v-btn class='text-none' to='/contact' router flat>Contact us</v-btn>
             </v-toolbar-items>
         </v-toolbar>
@@ -54,7 +55,8 @@
   </v-layout>
 </template>
 <script>
-
+import { mapState , mapActions } from 'vuex' ;
+import store from "../store"
 export default {
   
   data () {
@@ -64,9 +66,26 @@ export default {
           { title: 'Home', icon: 'dashboard' , route:'/' },
           { title: 'About', icon: 'question_answer' , route:'/about' }
         ],
-        right: null
+        right: null,
       }
-    }
-  
+    },
+    created() {
+          store.dispatch('login_logout')  
+    }, 
+    computed: {
+      ...mapState([
+        'login','logout'
+      ]),
+      ...mapActions([
+        'login_logout'
+      ])
+    },
+    methods: {
+      logout_function(){
+        localStorage.setItem('token','')
+        store.dispatch('login_logout')
+        this.$router.push({name:'login'})
+      }
+    },
 }
 </script>

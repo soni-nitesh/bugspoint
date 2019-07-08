@@ -63,6 +63,7 @@
 import axios from 'axios'
 import router from '../router'
 import HTTP from '../http'
+import { mapActions } from 'vuex'
   export default {
     data: () => ({
       valid: true,
@@ -100,8 +101,9 @@ import HTTP from '../http'
       email:this.email,
       password:this.password,
       name:this.name,
-      mobile:this.phone,
-     
+      mobile:this.phone,     
+   }).then((data)=>{
+     this.$router.push({name:'login'})
    })
      }
     }

@@ -2,7 +2,7 @@
 
 //const {validateAll} = use('validator')
 const User = use('App/Models/User')
-
+const Hash = use('Hash')
 class UserController {
 
     async register({request , session, response})
@@ -37,25 +37,34 @@ class UserController {
     }   
 
       async login({auth, request, session, reponse}){
-            var log = request.input('log')
-            let user = await User.findBy('email', log);
-         user = user.toJSON();
-         console.log(user.email);
-         console.log(log)
-         if(user.email == log){       
-            console.log(log)
-        let email = request.input('log');
-          let password = request.input('password');
-            
-             const token = await auth.attempt(email, password)
-             console.log(token);
-             return token;
-      
-             } 
-             else {
-                 console.log('not found');
-             }
-    } 
+        const { log, password } = request.all()
+        
+        const user = await User.query().where('email',log).first()
+        if(user)
+        { 
+            const passwordVerified  = await Hash.verify(password,user.password )
+            if(passwordVerified)
+            {
+            const token = await auth.attempt(log,password)
+             return(token)   
+            }
+        }
+        else{
+            const user = await User.query().where('mobile',log).first()
+        if(user)
+        { 
+            const passwordVerified  = await Hash.verify(password,user.password )
+            if(passwordVerified)
+            {
+             const token = await auth.attempt(user.email,password)
+             return(token)
+            }
+        }
+
+        }
+       
+
         }  
+    }
     
 module.exports = UserController

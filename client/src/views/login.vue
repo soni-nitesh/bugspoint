@@ -41,22 +41,31 @@
 import axios from 'axios'
 import router from '../router'
 import HTTP from '../http'
+import store from "../store"
+import { mapActions } from 'vuex'
   export default {
     data: () => ({
       valid: true,
       log:'',
       password: '',
     }),
-
+    component :{
+      ...mapActions([
+        'login_logout'
+      ])
+    },
     methods: {
        sendData(){
          console.log('test');
       return HTTP().post("/login",{
-      //email:this.email,
       password:this.password,
-      log:this.log,
-     
-   }) }
+      log:this.log,     
+   }).then((data)=>{
+     localStorage.setItem('token',data.data.token)
+     store.dispatch('login_logout');
+     this.$router.push({name:'home'})
+   })
+    }
     
     
     }
