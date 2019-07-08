@@ -11,7 +11,6 @@
                 v-model="valid"
                 lazy-validation
             >
-<<<<<<< HEAD
                 <!-- input name -->
                 <v-text-field
                 v-model="name"
@@ -21,40 +20,29 @@
                 required
                 ></v-text-field>
                              <!-- input phone number -->
-=======
-                <!-- input phone number -->
-                <v-content>
->>>>>>> de03b8d001c185ffd6919c0973b465afe51902e5
                 <v-text-field
                 v-model="phone"
                 :rules="phoneRules"
                 label="Phone"
                 required
                 ></v-text-field>
-                </v-content>
                 <!-- input email address -->
-                <v-content>
                 <v-text-field
                 v-model="email"
                 :rules="emailRules"
                 label="E-mail"
                 required
                 ></v-text-field>
-<<<<<<< HEAD
                
-=======
-                 </v-content>
->>>>>>> de03b8d001c185ffd6919c0973b465afe51902e5
                 <!-- input password -->
-                <v-content>
                 <v-text-field
                 v-model="password"
                 :rules="passwordRules"
                 label="password"
                 required
                 ></v-text-field>   
-                   </v-content>
-                <v-btn :disabled="!valid" color="success" >
+
+                <v-btn :disabled="!valid" color="success"  @click="validate">
                 Login
                 </v-btn>
             </v-form>
@@ -71,6 +59,11 @@ import HTTP from '../http'
   export default {
     data: () => ({
       valid: true,
+      name: '',
+      nameRules: [
+        v => !!v || 'Name is required',
+        v => (v && v.length <= 20) || 'Name must be less than 20 characters'
+      ],
       phone: '',
       phoneRules: [
         v => !!v || 'Phone Number is required',
@@ -89,28 +82,20 @@ import HTTP from '../http'
     }),
 
     methods: {
-      // validate () {
-      //   if (this.$refs.form.validate()) {
-      //     this.snackbar = true
-      //     this.sendData() ;
-      //   }
-      // },
+      validate () {
+        if (this.$refs.form.validate()) {
+          this.snackbar = true
+          this.sendData() ;
+        }
+      },
        sendData(){
-         if(this.phone){
-      return HTTP().post("/login",{
-      //email:this.email,
-      password:this.password,
-      mobile:this.phone,
-     
-   }) }
-    if(this.email){
-      return HTTP().post("/login",{
+      return HTTP().post("/register",{
       email:this.email,
       password:this.password,
-     // mobile:this.phone,
-     
-   }) }
-      console.log('test') }
+      name:this.name,
+      mobile:this.phone
+   })
+      }
     }
   }
 </script>
