@@ -1,7 +1,7 @@
 <template>
 <!-- Navbar  -->
     <v-layout >
-        <v-toolbar dark class='indigo darken-4' >
+        <v-toolbar dark class='indigo darken-4' fixed >
             <v-toolbar-side-icon  @click.stop="drawer = !drawer" class="hidden-md-and-up"></v-toolbar-side-icon>
             <v-toolbar-title>Bug's point</v-toolbar-title>
             <v-spacer></v-spacer>

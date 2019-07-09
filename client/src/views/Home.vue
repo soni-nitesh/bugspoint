@@ -1,13 +1,22 @@
 <template>
-  <HelloWorld />
+<v-layout>
+  <google-map />
+  </v-layout>
 </template>
 
 <script>
-  import HelloWorld from '../components/HelloWorld'
-
+ import GoogleMap from "./../components/GoogleMap";
   export default {
     components: {
-      HelloWorld
-    }
+      GoogleMap
+ 
+    },
+    data: function () {
+            return {
+              address: ''
+            }
+  },
+ 
+
   }
 </script>
