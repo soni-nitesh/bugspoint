@@ -13,7 +13,7 @@ Vue.use(BootstrapVue)
 Vue.use(VueGoogleMaps, {
   load: {
     key: "AIzaSyDHVcmBcT8vaS5tFgJqouSc20tfPyJp8z0",
-   // libraries: "places" // necessary for places input
+    libraries: "places" // necessary for places input
   }
 });
 

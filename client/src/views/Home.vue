@@ -1,5 +1,5 @@
 <template>
-<v-layout>
+<v-layout style='margin-top:50px'>
   <google-map />
   </v-layout>
 </template>

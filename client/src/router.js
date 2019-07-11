@@ -33,21 +33,27 @@ const router= new Router({
       name: 'contact',
       component: () => import('./views/contact.vue'),
     },
+    {
+      path: '/addbug',
+      name: 'addbug',
+      component: () => import('./views/addBugs.vue'),
+    },
 
   ],
 });
 router.beforeEach((to, from, next) => {
   store.dispatch('fetchAccessToken');
-  if (to.fullPath === '/') {
-    if (!store.state.accessToken) {
-      next('/login');
-    }
-  }
   if (to.fullPath === '/login') {
     if (store.state.accessToken) {
       next('/');
     }
   }
+
+  
+  
+  
+  
+ 
   next();
 });
 export default router;

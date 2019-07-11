@@ -1,5 +1,5 @@
 <template>
-  <div id='map' style='width:100%; height: 90vh;' >
+  <div id='map' style='width:100%;' >
     <gmap-map
       :center="center"
       :zoom="17"
@@ -39,10 +39,10 @@ export default {
   },
 
   mounted() {
-   
-    this.geolocate();
+      this.geolocate();
   },
 
+ 
   methods: {
     // receives a place object via the autocomplete component
     setPlace(place) {
@@ -55,7 +55,7 @@ export default {
           lng: this.lng
         };
         if(this.flag == false)
-        {
+        {            
         this.markers.push({ position: marker });
         this.places.push(this.currentPlace);
        // this.center = marker;
@@ -80,11 +80,14 @@ export default {
           lat: position.coords.latitude,
           lng: position.coords.longitude
         };
+       
+        this.lat = position.coords.latitude;
+        this.lng = position.coords.longitude;
+        this.addMarker();
       });
     console.log(this.center.lng)
     },
     test:function(markerobject){
-      console.log('df');
       console.log(markerobject.latLng.lat());
       console.log(markerobject.latLng.lng());
       var location = { 
@@ -93,7 +96,7 @@ export default {
             } ;
             this.lat =  parseFloat(markerobject.latLng.lat());
             this.lng =  parseFloat(markerobject.latLng.lng());
-  this.addMarker();
+         this.addMarker();
         //   var map = new google.maps.Map(document.getElementById('map'), {
         //   zoom: 4,
         //   center: {lat:  markerobject.latLng.lat(), lng: markerobject.latLng.lng() }
