@@ -50,7 +50,7 @@
                 ></v-text-field>   
                 </v-content>
                 <v-btn :disabled="!valid" color="success"  @click="validate">
-                Login
+                Register
                 </v-btn>
             </v-form>
             </v-card-text>
@@ -67,6 +67,8 @@ import { mapActions } from 'vuex'
   export default {
     data: () => ({
       valid: true,
+      dvalid:'',
+
       name: '',
       nameRules: [
         v => !!v || 'Name is required',
@@ -88,7 +90,7 @@ import { mapActions } from 'vuex'
         v => (v && v.length >= 4) || 'password must be greater than 4 characters'
       ],
     }),
-
+ 
     methods: {
       validate () {
         if (this.$refs.form.validate()) {
@@ -101,7 +103,7 @@ import { mapActions } from 'vuex'
       email:this.email,
       password:this.password,
       name:this.name,
-      mobile:this.phone,     
+      mobile:this.phone,      
    }).then((data)=>{
      this.$router.push({name:'login'})
    })
