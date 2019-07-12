@@ -1,5 +1,4 @@
 'use strict'
-
 const { validate } = use('Validator')
 const User = use('App/Models/User')
 const Hash = use('Hash')
@@ -7,21 +6,18 @@ class UserController {
 
     async register({request})
     { console.log('test') 
-      
-    const rules = {
-      email: 'unique:users',
-      mobile: 'unique:users'
-    }
-
-    const validation = await validate(request.all(), rules)
-
-    if (validation.fails()) {
-      session
-        .withErrors(validation.messages())
-        .flashExcept(['password'])
-
-      return response.redirect('back')
-    }
+    // const user = await User.query().where('email',request.input('email')).first();
+    // console.log(user.mobile);
+    // if (user.mobile) {
+    //   return 1;
+    // }
+    // else {
+    //   const user = await User.query().where('mobile', request.input('mobile')).first();
+    //   console.log(user.email); 
+    //   if(user.email){
+    //      return 2;
+    //    }
+    // }
     
      let {
       name,
@@ -47,6 +43,7 @@ class UserController {
         console.log(password)
         console.log('came in backend')     
         const user = await User.query().where('email',log).first()
+        console.log(user);
         if(user)
         { 
             const passwordVerified  = await Hash.verify(password,user.password )
@@ -58,8 +55,9 @@ class UserController {
         }
         else{
             const user = await User.query().where('mobile',log).first()
+            console.log(user);
         if(user)
-        { 
+        { console.log(user);
             const passwordVerified  = await Hash.verify(password,user.password )
             if(passwordVerified)
             { 
@@ -67,11 +65,10 @@ class UserController {
              return(token)
             }
         }
-
-        }
-       
-
-        }  
-    }
+       }
+       console.log(user);
+       return 0
+      }  
+     }
     
 module.exports = UserController
