@@ -3,7 +3,7 @@
     <v-layout>
         <v-toolbar dark class='indigo darken-4' fixed >
             <v-toolbar-side-icon  @click.stop="drawer = !drawer" class="hidden-md-and-up"></v-toolbar-side-icon>
-            <v-toolbar-title ><v-icon>bug_report</v-icon> Bug's point</v-toolbar-title>
+            <a href="/" style="color:white; hover:none"><v-toolbar-title ><v-icon>bug_report</v-icon> Bug's point</v-toolbar-title></a>
             <v-spacer></v-spacer>
             <v-toolbar-items class="hidden-sm-and-down">
             <v-btn flat class='text-none' to='/' router>Home</v-btn>
@@ -26,10 +26,12 @@
             <v-toolbar flat>
             <v-list>
                 <v-list-tile>
+                <a href="/">
                 <v-list-tile-title class="title">
-                  <v-icon>bug_report</v-icon>
+                <v-icon>bug_report</v-icon>
                     Bug's point
-                </v-list-tile-title>
+                </v-list-tile-title> </a>
+
                 </v-list-tile>
             </v-list>
             </v-toolbar>
@@ -64,7 +66,8 @@
             <v-list>
                 <v-list-tile>
                 <v-list-tile-title class="title">
-                  <v-icon>bug_report</v-icon>  Bug's point
+                  <a href="/">
+                  <v-icon>bug_report</v-icon>  Bug's point </a>
                 </v-list-tile-title>
                 </v-list-tile>
             </v-list>

@@ -48,8 +48,8 @@
                         
 					>
 				</v-flex>
-                <v-btn @click="submit" color="success" >
-                Submit
+                <v-btn @click="submit" color="teal" >
+                Save
                 </v-btn>
             </v-form>
         </div>
