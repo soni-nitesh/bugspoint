@@ -12,14 +12,14 @@ class UserController {
       email: 'unique:users',
       mobile: 'unique:users'
     }
-
+    
     const validation = await validate(request.all(), rules)
 
     if (validation.fails()) {
       session
         .withErrors(validation.messages())
         .flashExcept(['password'])
-
+        
       return response.redirect('back')
     }
     
@@ -29,7 +29,7 @@ class UserController {
       password,
       mobile
   } = request.all(); 
-    console.log(name);
+    
   const user = await User.create({
      name,
      email,
