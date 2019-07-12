@@ -39,7 +39,7 @@
                 required
                 ></v-text-field>   
                    </v-content>
-                <v-btn @click="login" color="success" >
+                <v-btn @click="validlog" color="success" >
                 Login
                 </v-btn>
             </v-form>
@@ -170,10 +170,15 @@ import { mapActions } from 'vuex'
      this.$router.push({name:'home'})
    })
     },
-    validate () {
+    validate() {
         if (this.$refs.form.validate()) {
           this.snackbar = true
           this.sendData() ;
+        }
+      },
+      validlog() {
+        if (this.$refs.form.validate()) {
+          this.login() ;
         }
       },
        sendData(){
