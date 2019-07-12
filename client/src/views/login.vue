@@ -165,11 +165,12 @@ import { mapActions } from 'vuex'
       password:this.lpassword,
       log:this.log,     
    }).then((data)=>{
-     localStorage.setItem('token',data.data.token)
+     console.log(data)
+     localStorage.setItem('token',data.data)
      store.dispatch('login_logout');
      this.$router.push({name:'home'})
    })
-    },
+    }, 
     validate() {
         if (this.$refs.form.validate()) {
           this.snackbar = true

@@ -3,6 +3,7 @@
 const { validate } = use('Validator')
 const User = use('App/Models/User')
 const Hash = use('Hash')
+const Encryption = use('Encryption')
 class UserController {
 
     async register({request})
@@ -42,17 +43,15 @@ class UserController {
     }    
 
       async login({auth, request, session, reponse}){
-        const { log, password } = request.all()
-        console.log(log),
-        console.log(password)
-        console.log('came in backend')     
+        const { log, password } = request.all()     
         const user = await User.query().where('email',log).first()
         if(user)
         { 
             const passwordVerified  = await Hash.verify(password,user.password )
             if(passwordVerified)
-            { console.log('email')
-            const token = await auth.attempt(user.email,password)
+            { 
+            const token =  Encryption.encrypt(user)
+         
              return(token)   
             }
         }
@@ -63,7 +62,8 @@ class UserController {
             const passwordVerified  = await Hash.verify(password,user.password )
             if(passwordVerified)
             { 
-             const token = await auth.attempt(user.email,password)
+              const token =  Encryption.encrypt(user)
+              
              return(token)
             }
         }
