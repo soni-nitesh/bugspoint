@@ -15,7 +15,10 @@
                 ref="form"
                 v-model="valid"
                 lazy-validation
+                enctype="multipart/form-data" 
+                method='POST'
             >
+            
                 <!-- title of problem-->
                 <v-content>
                <v-text-field
@@ -67,6 +70,10 @@
 <script>
 import GoogleMap from "./../components/addBugMap";
 import login from "./login";
+import axios from 'axios'
+import router from '../router'
+import HTTP from '../http'
+import store from "../store"
 export default {
     components: {
       GoogleMap,
@@ -75,6 +82,8 @@ export default {
     },
     data: function () {
             return {
+                file_data: '',
+  		        form_data: {},
                 login: true,
                 addBugPage:false,
                 select: null,
@@ -100,9 +109,11 @@ export default {
                 ],
                   title: "Image Upload",
         dialog: false,
+        image:{},
 		imageName: '',
 		imageUrl: '',
         imageFile: '',
+        a:{a:'fddg'},
         imageRules: [
                     v => !!v || 'image with name is required',
                    
@@ -125,13 +136,48 @@ export default {
             }
 
           this.snackbar = true
+          this.sendData();
         }
       },
+      //Send data to the database
+       async sendData(){
+          
+                let data = new FormData()
+                data.append('image', this.image)
+                data.append('title',this.name)
+                data.append('category',this.select)
+                data.append('lat',store.state.addPost_lat)
+                data.append('lng',store.state.addPost_lng)
+                 data.append('token',localStorage.getItem('token'))
+                let url = 'http://127.0.0.1:3333/addPost'
+                let options = {
+                    headers: {
+                    'content-type': 'multipart/form-data'
+                    }
+                }
+                
+  await HTTP().post(url, data, options) 
+
+},
+                //     console.log(this.image);
+                // return HTTP().post("/addPost",{
+                //     title:this.name,
+                //     category: this.select,
+                //     lat:store.state.addPost_lat,
+                //     lng:store.state.addPost_lng,
+                //     image:this.image
+                    
+                // }).then((data)=>{
+                //     //this.$router.push({name:'home'})
+                // })
+
+            // },
        pickFile () {
             this.$refs.image.click ()
         },
 		
 		onFilePicked (e) {
+            this.image = e.target.files[0] ;
 			const files = e.target.files
 			if(files[0] !== undefined) {
 				this.imageName = files[0].name

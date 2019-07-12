@@ -21,3 +21,4 @@ Route.get('/', () => {
 })
 Route.post('/register', 'UserController.register')
 Route.post('/login', 'UserController.login')
+Route.post('/addPost','PostController.addPost')

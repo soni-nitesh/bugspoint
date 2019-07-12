@@ -21,8 +21,10 @@
 </template>
 
 <script>
+import store from "../store"
 export default {
   name: "GoogleMap",
+
   data() {
     return {
       // default to Montreal to keep it simple
@@ -54,6 +56,9 @@ export default {
           lat: this.lat,
           lng: this.lng
         };
+        store.state.addPost_lat = this.lat ;
+        store.state.addPost_lng = this.lng ;
+        
         if(this.flag == false)
         {            
         this.markers.push({ position: marker });
@@ -81,8 +86,8 @@ export default {
           lng: position.coords.longitude
         };
        
-        this.lat = position.coords.latitude;
-        this.lng = position.coords.longitude;
+        this.lat = parseFloat(position.coords.latitude);
+        this.lng = parseFloat(position.coords.longitude);
         this.addMarker();
       });
     console.log(this.center.lng)

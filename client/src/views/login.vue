@@ -171,6 +171,7 @@ import { mapActions } from 'vuex'
       password:this.lpassword,
       log:this.log,     
    }).then((data)=>{
+<<<<<<< HEAD
      if(data.data){
      localStorage.setItem('token',data.data.token)
      store.dispatch('login_logout');
@@ -180,6 +181,14 @@ import { mapActions } from 'vuex'
     alert("user not found")
    }})
     },
+=======
+     console.log(data)
+     localStorage.setItem('token',data.data)
+     store.dispatch('login_logout');
+     this.$router.push({name:'home'})
+   })
+    }, 
+>>>>>>> d11fad6d64fad42bee5309eda4004a4d52cd07d3
     validate() {
         if (this.$refs.form.validate()) {
           this.snackbar = true

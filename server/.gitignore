@@ -6,6 +6,9 @@ tmp
 
 # Environment variables, never commit this file
 .env
+<<<<<<< HEAD
 
+=======
+>>>>>>> d11fad6d64fad42bee5309eda4004a4d52cd07d3
 # The development sqlite file
 database/development.sqlite

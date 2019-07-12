@@ -2,22 +2,26 @@
 const { validate } = use('Validator')
 const User = use('App/Models/User')
 const Hash = use('Hash')
+const Encryption = use('Encryption')
 class UserController {
 
     async register({request})
     { console.log('test') 
-    // const user = await User.query().where('email',request.input('email')).first();
-    // console.log(user.mobile);
-    // if (user.mobile) {
-    //   return 1;
-    // }
-    // else {
-    //   const user = await User.query().where('mobile', request.input('mobile')).first();
-    //   console.log(user.email); 
-    //   if(user.email){
-    //      return 2;
-    //    }
-    // }
+      
+    const rules = {
+      email: 'unique:users',
+      mobile: 'unique:users'
+    }
+    
+    const validation = await validate(request.all(), rules)
+
+    if (validation.fails()) {
+      session
+        .withErrors(validation.messages())
+        .flashExcept(['password'])
+        
+      return response.redirect('back')
+    }
     
      let {
       name,
@@ -25,7 +29,7 @@ class UserController {
       password,
       mobile
   } = request.all(); 
-    console.log(name);
+    
   const user = await User.create({
      name,
      email,
@@ -38,18 +42,16 @@ class UserController {
     }    
 
       async login({auth, request, session, reponse}){
-        const { log, password } = request.all()
-        console.log(log),
-        console.log(password)
-        console.log('came in backend')     
+        const { log, password } = request.all()     
         const user = await User.query().where('email',log).first()
         console.log(user);
         if(user)
         { 
             const passwordVerified  = await Hash.verify(password,user.password )
             if(passwordVerified)
-            { console.log('email')
-            const token = await auth.attempt(user.email,password)
+            { 
+            const token =  Encryption.encrypt(user)
+         
              return(token)   
             }
         }
@@ -61,7 +63,8 @@ class UserController {
             const passwordVerified  = await Hash.verify(password,user.password )
             if(passwordVerified)
             { 
-             const token = await auth.attempt(user.email,password)
+              const token =  Encryption.encrypt(user)
+              
              return(token)
             }
         }
