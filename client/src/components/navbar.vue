@@ -44,6 +44,8 @@
         <!-- Drawer for mobile size user -->
         <v-navigation-drawer
             v-model="drawer"
+            v-bind:stateless='logout'
+            value='false'
             absolute
             temporary
            :width="250"
@@ -83,6 +85,7 @@
     </v-navigation-drawer>
     <v-navigation-drawer v-if="logout"
             v-model="drawer"
+
             absolute
             temporary
            :width="250"
@@ -116,60 +119,28 @@
                 </v-list-tile-content>
             </v-list-tile>
             </v-list>
-            <v-list dense class="pt-0">
-            <v-list-tile>
-                <v-list-tile-action>
-                <v-icon>face</v-icon>
-                </v-list-tile-action>
-
-                <v-list-tile-content>
-                 <!-- <v-menu offset-y v-if="logout">
-      <template v-slot:activator="{ on }">
-        <v-btn
-          color="cyan lighten-1"
-          dark
-          v-on="on"
-           >
-                     
-        </v-btn>
-      </template>
-      <v-list>
-        <v-list-tile>
-          <v-list-tile-title > <v-icon>face</v-icon> Profile</v-list-tile-title>
-        </v-list-tile>
-                <v-list-tile>
-          <v-list-tile-title><v-icon>bug_report</v-icon>My Bugs</v-list-tile-title>
-        </v-list-tile>
-                <v-list-tile>
-          <v-list-tile-title @click="logout_function"> <v-icon>account_box</v-icon>Logout</v-list-tile-title>
-        </v-list-tile>
-      </v-list>
-    </v-menu> -->
-      <v-list-group
-        no-action
-          value="true"
-      >
+            <v-list>               
+  <v-list-group
+       no-action
+      prepend-icon="account_circle"
+     value="true">
           <template v-slot:activator>
-            <v-list-tile>
-              <v-list-tile-title>User</v-list-tile-title>
+            <v-list-tile >
+            <v-list-tile-title>User</v-list-tile-title>
             </v-list-tile>
-          </template>
-          <v-list-tile
-            v-for="(user, i) in users"
-            :key="i"
-            @click="click"
-          >
-            <v-list-tile-title v-text="user.title"></v-list-tile-title>
-            <v-list-tile-action>
-              <v-icon v-text="user.icon"></v-icon>
-            </v-list-tile-action>
+            </template>
+
+          <v-list-tile>
+            <v-list-tile-title>Profile</v-list-tile-title>
+          </v-list-tile>
+          <v-list-tile>
+            <v-list-tile-title>My Bugs</v-list-tile-title>
+          </v-list-tile>
+            <v-list-tile>
+            <v-list-tile-title @click="logout_function" > <v-icon small>account_circle</v-icon>Logout</v-list-tile-title>
           </v-list-tile>
         </v-list-group>
-              <!-- <v-list-tile-title @click='logout_function'>Logout</v-list-tile-title> -->
-                </v-list-tile-content>
-            </v-list-tile>
-            </v-list>
-            
+        </v-list>
     </v-navigation-drawer>
     <!--     ----------------------------------------------------------------- -->
   </v-layout>

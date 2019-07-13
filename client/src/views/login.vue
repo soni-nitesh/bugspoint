@@ -171,10 +171,15 @@ import { mapActions } from 'vuex'
       password:this.lpassword,
       log:this.log,     
    }).then((data)=>{
+     if(data.data){
      console.log(data)
      localStorage.setItem('token',data.data)
      store.dispatch('login_logout');
      this.$router.push({name:'home'})
+    }
+    else{
+      alert("User not found");
+    }
    })
     }, 
     validate() {
