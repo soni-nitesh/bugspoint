@@ -157,7 +157,6 @@
           <v-list-tile
             v-for="(user, i) in users"
             :key="i"
-            @click="click"
           >
             <v-list-tile-title v-text="user.title"></v-list-tile-title>
             <v-list-tile-action>
