@@ -9,11 +9,36 @@
             <v-btn flat class='text-none' to='/' router>Home</v-btn>
             <v-btn class='text-none' to='/about' router flat>About Us</v-btn>
             <v-btn class='text-none' to='/login'  v-if='login' router flat> Login / Signup</v-btn>
-            <v-btn class='text-none' @click='logout_function' v-if='logout' flat>Logout</v-btn>
             <v-btn class='text-none' to='/contact' router flat>Contact us</v-btn>
             <v-btn fab dark color="teal" small to='/addbug' router>
              <v-icon dark>add</v-icon>
             </v-btn>
+            <v-menu offset-y v-if="logout">
+      <template v-slot:activator="{ on }">
+        <v-btn
+          color="cyan lighten-1"
+          dark
+          small
+          v-on="on"
+           fab
+           >
+           <v-icon>face</v-icon>          
+        </v-btn>
+      </template>
+      <v-list>
+        <v-list-tile>
+          <v-list-tile-title > <v-icon>face</v-icon> Profile</v-list-tile-title>
+        </v-list-tile>
+                <v-list-tile>
+          <v-list-tile-title><v-icon>bug_report</v-icon>My Bugs</v-list-tile-title>
+        </v-list-tile>
+                <v-list-tile>
+          <v-list-tile-title @click="logout_function"> <v-icon>account_box</v-icon>Logout</v-list-tile-title>
+        </v-list-tile>
+      </v-list>
+    </v-menu>
+            <!-- <v-btn class='text-none' @click='logout_function' v-if='logout' flat>Logout</v-btn> -->
+            
             </v-toolbar-items>
         </v-toolbar>
         <!-- Drawer for mobile size user -->
@@ -98,7 +123,49 @@
                 </v-list-tile-action>
 
                 <v-list-tile-content>
-                <v-list-tile-title @click='logout_function'>Logout</v-list-tile-title>
+                 <!-- <v-menu offset-y v-if="logout">
+      <template v-slot:activator="{ on }">
+        <v-btn
+          color="cyan lighten-1"
+          dark
+          v-on="on"
+           >
+                     
+        </v-btn>
+      </template>
+      <v-list>
+        <v-list-tile>
+          <v-list-tile-title > <v-icon>face</v-icon> Profile</v-list-tile-title>
+        </v-list-tile>
+                <v-list-tile>
+          <v-list-tile-title><v-icon>bug_report</v-icon>My Bugs</v-list-tile-title>
+        </v-list-tile>
+                <v-list-tile>
+          <v-list-tile-title @click="logout_function"> <v-icon>account_box</v-icon>Logout</v-list-tile-title>
+        </v-list-tile>
+      </v-list>
+    </v-menu> -->
+      <v-list-group
+        no-action
+          value="true"
+      >
+          <template v-slot:activator>
+            <v-list-tile>
+              <v-list-tile-title>User</v-list-tile-title>
+            </v-list-tile>
+          </template>
+          <v-list-tile
+            v-for="(user, i) in users"
+            :key="i"
+            @click="click"
+          >
+            <v-list-tile-title v-text="user.title"></v-list-tile-title>
+            <v-list-tile-action>
+              <v-icon v-text="user.icon"></v-icon>
+            </v-list-tile-action>
+          </v-list-tile>
+        </v-list-group>
+              <!-- <v-list-tile-title @click='logout_function'>Logout</v-list-tile-title> -->
                 </v-list-tile-content>
             </v-list-tile>
             </v-list>
@@ -120,13 +187,19 @@ export default {
           { title: 'Home', icon: 'home' , route:'/' },
           { title: 'About', icon: 'info' , route:'/about' },
           { title: 'Contact US', icon: 'contact_mail' , route:'' },
-          { title: 'Login / Signup', icon: 'account_box' , route:'/login' } 
+          { title: 'Login / Signup', icon: 'account_box' , route:'/login' },
+           
         ],
         items2: [
           { title: 'Home', icon: 'home' , route:'/' },
+          { title: 'Add Bug', icon: 'bug_report' , route:'/addbug' },
           { title: 'About', icon: 'info' , route:'/about' },
           { title: 'Contact US', icon: 'contact_mail' , route:'' },
+           
         ],
+        users: [{ title: 'Profile', icon: 'face', click:'profile' },
+                 { title: 'My Bugs', icon: 'bug_report', click:'profile' },
+                 { title: 'logout', icon: 'account_circle', click:'logout_function' },],
         right: null,
       }
     },

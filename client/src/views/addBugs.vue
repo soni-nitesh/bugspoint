@@ -37,6 +37,7 @@
                 :rules="[v => !!v || 'Item is required']"
                 label="Category"
                 required
+                small-chips
                 ></v-select>
  
 				<v-flex xs12 class="text-xs-center text-sm-center text-md-center text-lg-center">
@@ -48,12 +49,13 @@
 						ref="image"
 						accept="image/*"
 						@change="onFilePicked"
-                        
+                         
 					>
 				</v-flex>
                 <v-btn @click="submit" color="teal" >
                 Save
                 </v-btn>
+
             </v-form>
         </div>
      
@@ -86,22 +88,17 @@ export default {
                 addBugPage:false,
                 select: null,
                 items: [
-                    'Item 1',
-                    'Item 2',
-                    'Item 3',
-                    'Item 4',
-                    'Item 5',
-                    'Item 6',
-                    'Item 7',
-                    'Item 8',
-                    'Item 9',
-                    'Item 10',
-                    'Item 11',
-                    'Item 3',
-                    'Item 3',
-                    'Item 3',
-                    'Item 3',
-
+                    'Social Welfare',
+                    'Garbage',
+                    'Urban Development',
+                    'Transport',
+                    'Culture',
+                    'Education',
+                    'Health',
+                    'Construction and Improvment',
+                    'Advertising',
+                    'Tourism',
+                    'Other',
                 ],
                 checkbox: false,
                 valid: true,

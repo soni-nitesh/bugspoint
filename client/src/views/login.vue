@@ -73,6 +73,7 @@
                 label="Phone"
                 required
                 ></v-text-field>
+                <p v-if="mflag" style="color:red">{{mobile_error}}</p>
                 </v-content>
                 
                 <!-- input email address -->
@@ -83,6 +84,7 @@
                 label="E-mail"
                 required
                 ></v-text-field>
+                <p v-if="eflag" style="color:red">{{email_error}}</p>
                  </v-content>
                 <!-- input password -->
                 <v-content>
@@ -113,7 +115,11 @@ import store from "../store"
 import { mapActions } from 'vuex'
   export default {
     data: () => ({
-       flag : true,
+      email_error:'',
+      mflag: false,
+      eflag:false,
+      mobile_error:'',
+      flag : true,
       dialog: false,
       valid: true,
       log:'',
@@ -165,12 +171,24 @@ import { mapActions } from 'vuex'
       password:this.lpassword,
       log:this.log,     
    }).then((data)=>{
+<<<<<<< HEAD
+     if(data.data){
+     localStorage.setItem('token',data.data.token)
+     store.dispatch('login_logout');
+     this.$router.push({name:'home'})
+   }
+   else{
+    alert("user not found")
+   }})
+    },
+=======
      console.log(data)
      localStorage.setItem('token',data.data)
      store.dispatch('login_logout');
      this.$router.push({name:'home'})
    })
     }, 
+>>>>>>> d11fad6d64fad42bee5309eda4004a4d52cd07d3
     validate() {
         if (this.$refs.form.validate()) {
           this.snackbar = true
@@ -190,7 +208,18 @@ import { mapActions } from 'vuex'
       name:this.name,
       mobile:this.phone,      
    }).then((data)=>{
+     console.log(data);
+     if(data.data == 1){ 
+       this.eflag = true;
+       this.email_error = "Email is already registered";
+     }
+       if(data.data == 2){ 
+         this.mflag = true;
+        this.mobile_error = "Mobile is already registered";
+         }
+     else{
      this.$router.push({name:'login'})
+        }
    })
      },
      home(){

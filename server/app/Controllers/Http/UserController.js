@@ -1,5 +1,4 @@
 'use strict'
-
 const { validate } = use('Validator')
 const User = use('App/Models/User')
 const Hash = use('Hash')
@@ -45,6 +44,7 @@ class UserController {
       async login({auth, request, session, reponse}){
         const { log, password } = request.all()     
         const user = await User.query().where('email',log).first()
+        console.log(user);
         if(user)
         { 
             const passwordVerified  = await Hash.verify(password,user.password )
@@ -57,8 +57,9 @@ class UserController {
         }
         else{
             const user = await User.query().where('mobile',log).first()
+            console.log(user);
         if(user)
-        { 
+        { console.log(user);
             const passwordVerified  = await Hash.verify(password,user.password )
             if(passwordVerified)
             { 
@@ -67,11 +68,10 @@ class UserController {
              return(token)
             }
         }
-
-        }
-       
-
-        }  
-    }
+       }
+       console.log(user);
+       return 0
+      }  
+     }
     
 module.exports = UserController
