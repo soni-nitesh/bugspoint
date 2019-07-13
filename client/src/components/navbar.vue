@@ -11,7 +11,7 @@
             <v-btn class='text-none' to='/login'  v-if='login' router flat> Login / Signup</v-btn>
             <v-btn class='text-none' to='/contact' router flat>Contact us</v-btn>
             <v-btn fab dark color="teal" small to='/addbug' router>
-             <v-icon dark>add</v-icon>
+             <v-icon dark>add</v-icon>    
             </v-btn>
             <v-menu offset-y v-if="logout">
       <template v-slot:activator="{ on }">
