@@ -144,7 +144,6 @@ export default {
       },
       //Send data to the database
        async sendData(){
-          
                 let data = new FormData()
                 data.append('image', this.image)
                 data.append('title',this.name)
@@ -162,19 +161,6 @@ export default {
   await HTTP().post(url, data, options) 
 
 },
-                //     console.log(this.image);
-                // return HTTP().post("/addPost",{
-                //     title:this.name,
-                //     category: this.select,
-                //     lat:store.state.addPost_lat,
-                //     lng:store.state.addPost_lng,
-                //     image:this.image
-                    
-                // }).then((data)=>{
-                //     //this.$router.push({name:'home'})
-                // })
-
-            // },
        pickFile () {
             this.$refs.image.click ()
         },

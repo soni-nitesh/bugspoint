@@ -21,8 +21,7 @@ class PostController {
           const image = new Date().getTime()+'.'+profilePic.subtype
           await profilePic.move(Helpers.publicPath('uploads/blogPicture'), {
             name: image,
-          }) 
-          console.log(category)
+          })   
           const post = await Post.create({
             user_id,
             lat ,
@@ -31,9 +30,8 @@ class PostController {
             category,
             image 
         }); 
-        
            post.save();
-          console.log('df')
+
     }
 }
 
