@@ -22,7 +22,7 @@
             class="d-flex transition-fast-in-fast-out cyan darken-2 v-card--reveal display-3 white--text"
             style="height: 100%;"
           >
-            <v-btn small>Know More</v-btn>
+            <v-btn small @click='goToPost(data.id)'>Know More</v-btn>
       </div>
       </v-expand-transition>
       </v-img>
@@ -89,8 +89,13 @@ import store from "../store"
          }
          } )
       .catch(error => console.log(error))     
+    },
+    goToPost(id){
+      this.$router.push({name:'bug' , params: { id: id }})
     }
-  }}
+  },
+
+}
 </script>
 <style>
 .v-card--reveal {
