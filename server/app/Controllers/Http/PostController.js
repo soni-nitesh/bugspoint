@@ -45,6 +45,13 @@ class PostController {
       console.log(post.toJSON());
       return response.send(post.toJSON());
     }
+
+    //send particuLAR POST data 
+    async getParticularPostData({request,response}){
+      let post = await Post.query().where('id',request.input('id')).first()
+      return response.send(post.toJSON())
+
+    }
 }
 
 module.exports = PostController
