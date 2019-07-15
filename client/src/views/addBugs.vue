@@ -22,10 +22,10 @@
                 <!-- title of problem-->
                 <v-content>
                <v-text-field
-                v-model="name"
-                :counter="20"
-                :rules="nameRules"
-                label="Title of problem"
+                v-model="description"
+                :counter="100"
+                :rules="descriptionRules"
+                label="Description"
                 required
                 ></v-text-field>
                  </v-content>
@@ -102,10 +102,10 @@ export default {
                 ],
                 checkbox: false,
                 valid: true,
-                name: '',
-                nameRules: [
+                description: '',
+                descriptionRules: [
                     v => !!v || 'Name is required',
-                    v => (v && v.length <= 20) || 'Name must be less than 20 characters'
+                    v => (v && v.length <= 100) || 'Name must be less than 20 characters'
                 ],
                   title: "Image Upload",
         dialog: false,
@@ -143,7 +143,7 @@ export default {
        async sendData(){
                 let data = new FormData()
                 data.append('image', this.image)
-                data.append('title',this.name)
+                data.append('description',this.description)
                 data.append('category',this.select)
                 data.append('lat',store.state.addPost_lat)
                 data.append('lng',store.state.addPost_lng)
@@ -155,8 +155,9 @@ export default {
                     }
                 }
                 
-  await HTTP().post(url, data, options) 
-
+  await HTTP().post(url, data, options).then(()=>{
+      this.$router.push({name:'home'})
+  }) 
 },
        pickFile () {
             this.$refs.image.click ()

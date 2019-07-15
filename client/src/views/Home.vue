@@ -1,10 +1,59 @@
 <template>
-<div>
-    <v-layout style='margin-top:50px'>
+<v-container fluid>
+    <v-layout style='margin-top:50px' row>
       <google-map />
-    </v-layout>
+       <v-flex xs12 md3 pa-3 mt-5 v-for="(data, index) in data" :key="index">
+  <v-hover>
+    <v-card mt-2
+      slot-scope="{ hover }"
+      class="mx-auto rounded-card"
+       :class="`elevation-${hover ? 12 : 2}`"
+      color="grey lighten-4"
+    >
+      <v-img 
+          
+          id="iamge"
+         class="zoom"
+        aspect-ratio="2"
+        :src="imageSrc + data.image"
+      >
+        <v-expand-transition>
+          <div
+            v-if="hover"
+            class="d-flex transition-fast-in-fast-out cyan darken-2 v-card--reveal display-3 white--text"
+            style="height: 100%;"
+          >
+            <v-btn small>Know More</v-btn>
+          </div>
+        </v-expand-transition>
+      </v-img>
+      <v-card-text
+        class="pt-4"
+        style="position: relative;"
+      >
+        <v-btn
+          absolute
+          color="cyan darken-1"
+          class="white--text"
+          small
+          right
+          top
+        >
+          <v-text icon class='text-none'> By : {{data.user_name}}</v-text>
+        </v-btn>
+        <div class="font-weight-light grey--text title mb-2"><p>{{data.created_at}}</p></div>
+        <h6 class="subheading font-weight-light cyan--text mb-2">{{data.description}}</h6>
+        <div class="font-weight-light title mb-2">
+        {{data.category}}
+        </div>
+      </v-card-text>
+    </v-card>
+  </v-hover>
+
+      </v-flex>      
+          </v-layout>
   
-</div>
+</v-container>
 </template>
 
 <script>
@@ -21,14 +70,52 @@ import store from "../store"
     },
     data: function () {
             return {
-              address: ''
+              show: false,
+              address: '',
+              imageSrc : 'http://127.0.0.1:3333/uploads/blogPicture/',
+              data: [],
             }
   },
-  mounted() {
+   mounted(){
+    this.getPostData()
+  },
+  methods: {
+    getPostData(){
+      axios
+      .get('http://127.0.0.1:3333/getPostData')
+      .then( (data) => {
+        if(data.data){
+         this.data = [...data.data];
+         store.state.data = [...this.data];
+         console.log(store.state.data);
+      }
+      })
+      .catch(error => console.log(error))
+    },
     
-    // this.$router.push({name: 'bug', params: {id:2 }});
   },
 
 
   }
 </script>
+<style>
+.v-card--reveal {
+  align-items: center;
+  bottom: 0;
+  justify-content: center;
+  opacity: .8;
+  
+  width: 100%;
+}
+.rounded-card{
+    border-radius:20px;
+}
+
+/* .zoom { 
+   transition: transform .2s; 
+}
+
+.zoom:hover {
+  transform: scale(1.1); 
+} */
+</style>
