@@ -125,11 +125,20 @@ export default {
             title: 'lots of garbage on roads',
             category : 'social',
             date : '12-12-12' ,
-            name : 'kuldeep'
+            name : 'kuldeep',
+            data: []
         }
     },
     mounted() {
+        this.testing();
+        this.data = store.state.data;
         console.log(this.id);
+        console.log(store.state.data);
+    },
+    methods: {
+        testing(){
+            console.log(this.data);
+        }
     },
 }
 </script>
