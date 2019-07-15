@@ -2,9 +2,9 @@
 <v-container fluid>
     <v-layout style='margin-top:50px' row>
       <google-map />
-       <v-flex xs12 md4 pa-3 mt-5 v-for="(data, index) in data" :key="index">
-  <v-hover>
-    <v-card mt-2
+   <v-flex xs12 md4 pa-3 mt-5 v-for="(data, index) in data" :key="index">
+           <v-hover>
+      <v-card mt-2
        slot-scope="{ hover }"
        class="mx-auto rounded-card"
        :class="`elevation-${hover ? 12 : 2}`"
@@ -46,12 +46,11 @@
         {{data.category}}
         </div>
       </v-card-text>
-    </v-card>
-  </v-hover>
-
-      </v-flex>      
-          </v-layout>
-  
+          </v-card>
+       </v-hover>
+       
+           </v-flex>      
+          </v-layout>  
 </v-container>
 </template>
 
@@ -69,32 +68,29 @@ import store from "../store"
     },
     data: function () {
             return {
+              more:false,
               show: false,
               address: '',
               imageSrc : 'http://127.0.0.1:3333/uploads/blogPicture/',
               data: [],
             }
   },
-   mounted(){
-    this.getPostData()
-  },
+   created(){
+         this.getPostData()
+   },
   methods: {
-    getPostData(){
-      axios
+   async getPostData(){
+     await axios
       .get('http://127.0.0.1:3333/getPostData')
-      .then( (data) => {
-        if(data.data){
-         this.data = [...data.data];
-         store.state.data = [...this.data];
-      }
-      })
-      .catch(error => console.log(error))
-    },
-    
-  },
-
-
-  }
+      .then( async (data) => {
+        if(await data.data){
+         this.data = await [...data.data];
+         this.length = await this.data.length;
+         }
+         } )
+      .catch(error => console.log(error))     
+    }
+  }}
 </script>
 <style>
 .v-card--reveal {
