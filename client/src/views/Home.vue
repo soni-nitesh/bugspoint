@@ -2,20 +2,19 @@
 <v-container fluid>
     <v-layout style='margin-top:50px' row>
       <google-map />
-       <v-flex xs12 md3 pa-3 mt-5 v-for="(data, index) in data" :key="index">
+       <v-flex xs12 md4 pa-3 mt-5 v-for="(data, index) in data" :key="index">
   <v-hover>
     <v-card mt-2
-      slot-scope="{ hover }"
-      class="mx-auto rounded-card"
+       slot-scope="{ hover }"
+       class="mx-auto rounded-card"
        :class="`elevation-${hover ? 12 : 2}`"
-      color="grey lighten-4"
+       color="grey lighten-4"
     >
-      <v-img 
-          
+      <v-img          
           id="iamge"
-         class="zoom"
-        aspect-ratio="2"
-        :src="imageSrc + data.image"
+          class=''
+          aspect-ratio="2"
+          :src="imageSrc + data.image"
       >
         <v-expand-transition>
           <div
@@ -24,8 +23,8 @@
             style="height: 100%;"
           >
             <v-btn small>Know More</v-btn>
-          </div>
-        </v-expand-transition>
+      </div>
+      </v-expand-transition>
       </v-img>
       <v-card-text
         class="pt-4"
@@ -87,7 +86,6 @@ import store from "../store"
         if(data.data){
          this.data = [...data.data];
          store.state.data = [...this.data];
-         console.log(store.state.data);
       }
       })
       .catch(error => console.log(error))
@@ -111,11 +109,4 @@ import store from "../store"
     border-radius:20px;
 }
 
-/* .zoom { 
-   transition: transform .2s; 
-}
-
-.zoom:hover {
-  transform: scale(1.1); 
-} */
 </style>
