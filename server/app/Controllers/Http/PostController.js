@@ -2,7 +2,8 @@
 
 const Encryption = use('Encryption')
 const Post = use('App/Models/Post')
-const User = use('App/Models/Post')
+const User = use('App/Models/User')
+const Like = use('App/models/Like')
 const Helpers = use('Helpers')
 class PostController {
     async addPost({request}){     
@@ -36,7 +37,6 @@ class PostController {
             category,
             image 
         }); 
-           console.log(post);
            post.save();
 
     }
