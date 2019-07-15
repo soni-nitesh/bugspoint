@@ -10,7 +10,10 @@ export default new Vuex.Store({
     logout: false,
     accessToken: null,
     addPost_lat: null,
-    addPost_lng: null
+    addPost_lng: null ,
+    particularPostId: 1 ,
+    particularPostLat: 25.353769 ,
+    particularPostLng : 74.631531
   },
   mutations: {
     login_logout(state){

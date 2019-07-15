@@ -1,7 +1,7 @@
 <template>
   <div style='margin-top:65px;'>
     <h1>hello world</h1>
-    <img :src="image" class='img-fluid' />
+    <img :src="imageSrc + image" class='img-fluid' />
     <h3 class='ml-4 pb-3 text-center'>Location</h3>
     <div style='height:350px;'>
     <Map style='height:350px;' class='w-75 mx-auto'/>
@@ -21,6 +21,7 @@ export default {
   },
   data(){
     return{
+      imageSrc:'http://127.0.0.1:3333/uploads/blogPicture/',
       image : ''
     }
   },
@@ -33,8 +34,8 @@ export default {
       .get('http://127.0.0.1:3333/getPostData')
       .then( (data) => {
         console.log(data)
-        var temp = 'http://127.0.0.1:3333/uploads/blogPicture/'
-        this.image = temp.concat(data.data[0].image)
+        
+        this.image = data.data[0].image
       })
       .catch(error => console.log(error))
     },

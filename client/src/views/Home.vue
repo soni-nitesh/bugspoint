@@ -24,6 +24,10 @@ import store from "../store"
               address: ''
             }
   },
+  mounted() {
+    
+    // this.$router.push({name: 'bug', params: {id:2 }});
+  },
 
 
   }

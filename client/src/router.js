@@ -38,6 +38,12 @@ const router= new Router({
       name: 'addbug',
       component: () => import('./views/addBugs.vue'),
     },
+    {
+      path: '/bug/:id',
+      name: 'bug',
+      component: () => import('./views/bug.vue'), 
+      props: true
+    },
 
   ],
 });

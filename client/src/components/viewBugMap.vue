@@ -4,7 +4,6 @@
       :center="center"
       :zoom="17"
       class="mw-100 h-100"
-      @click='test'
       :options="{scrollwheel: true}"
     >
       <gmap-marker
@@ -82,42 +81,17 @@ export default {
       
       navigator.geolocation.getCurrentPosition(position => {
         this.center = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude
+          lat: store.state.particularPostLat,
+          lng: store.state.particularPostLng
         };
        
-        this.lat = parseFloat(position.coords.latitude);
-        this.lng = parseFloat(position.coords.longitude);
+        this.lat = parseFloat(store.state.particularPostLat);
+        this.lng = parseFloat(store.state.particularPostLng);
         this.addMarker();
       });
     console.log(this.center.lng)
     },
-    test:function(markerobject){
-      console.log(markerobject.latLng.lat());
-      console.log(markerobject.latLng.lng());
-      var location = { 
-                lat : parseFloat(markerobject.latLng.lat()),
-                lng : parseFloat(markerobject.latLng.lng())
-            } ;
-            this.lat =  parseFloat(markerobject.latLng.lat());
-            this.lng =  parseFloat(markerobject.latLng.lng());
-         this.addMarker();
-        //   var map = new google.maps.Map(document.getElementById('map'), {
-        //   zoom: 4,
-        //   center: {lat:  markerobject.latLng.lat(), lng: markerobject.latLng.lng() }
-        // });
-  
-      //     var geocoder= new google.maps.Geocoder();
-      // geocoder.geocode({'location': location}, function (results, status) {
-      //   if (status === 'OK') {
-      //     if (results[1]) {
-      //       alert(results[1].formatted_address)
-      //     } else {
-      //       window.alert('No results found')
-      //     }
-      //   }
-      // })
-    }
+    
   }
 };
 </script>

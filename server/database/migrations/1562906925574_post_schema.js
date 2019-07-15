@@ -8,8 +8,8 @@ class PostSchema extends Schema {
     this.create('posts', (table) => {
       table.increments()
       table.string('user_id', 4).notNullable()
-      table.float('lat',50).notNullable()
-      table.float('lng', 50).notNullable()
+      table.float('lat',50,6).notNullable()
+      table.float('lng', 50,6).notNullable()
       table.string('title', 50).notNullable()
       table.string('category', 20).notNullable()
       table.string('image',100).notNullable()
