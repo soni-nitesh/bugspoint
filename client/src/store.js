@@ -8,13 +8,12 @@ export default new Vuex.Store({
     baseURL : "http://localhost:3333",
     login : true,
     logout: false,
-    data:[],
     accessToken: null,
     addPost_lat: null,
     addPost_lng: null ,
     particularPostId: 1 ,
-    particularPostLat: 25.353769 ,
-    particularPostLng : 74.631531
+    particularPostLat: null ,
+    particularPostLng : null
   },
   mutations: {
     login_logout(state){

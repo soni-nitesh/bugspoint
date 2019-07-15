@@ -4,7 +4,7 @@
          <v-layout row wrap>
              <!-- map view -->
              <v-flex md6 xs12>
-                 <GoogleMap style='height:90vh;' class='w-95 mx-auto'/>
+                 <GoogleMap style='height:90vh;' v-if='flag' class='w-95 mx-auto'/>
              </v-flex>
              <!-- cards showing details -->
              <v-flex md6 xs12 mt-4 >
@@ -12,7 +12,7 @@
                         max-width="600"
                         class="mx-auto rounded-card"
                     >
-                      <h3 class='text-center pt-2'>{{ title }}</h3>
+                      <h3 class='text-center pt-2'>{{ data.description }}</h3>
                         <v-layout
                         pt-2
                         pb-3
@@ -23,7 +23,7 @@
                             height="180"
                             width="180"
                             class='img-fluid'
-                            src="https://cdn.vuetifyjs.com/images/cards/store.jpg"
+                            :src="imageSrc + data.image"
                             ></v-img>
                         </v-flex>
                         <v-flex >
@@ -33,19 +33,19 @@
                             >
                             <v-layout column class='mt-3 ml-4'>
                                 <v-flex pt-2>                                
-                                <b>category</b> : {{category}}
+                                <b>category</b> : {{data.category}}
                                 </v-flex>
                                 <v-flex pt-2>
-                                <b>address</b> : current address
+                                <b>Address</b> : current address
                                 </v-flex>
                                 <v-flex pt-2>
-                                <b>date</b> : {{ date }}
+                                <b>Date</b> : {{ data.updated_at }}
                                 </v-flex>
                                 <v-flex pt-2>
-                                <b>status</b> : new
+                                <b>Status</b> : new
                                 </v-flex>
                                 <v-flex pt-2>
-                                <b>Posted By</b> : {{ name }}
+                                <b>Posted By</b> : {{ data.user_name }}
                                 </v-flex>
                             </v-layout>
                             </v-layout>
@@ -115,6 +115,9 @@
 <script>
 import store from './../store'
 import GoogleMap from "./../components/viewBugMap";
+import axios from 'axios'
+import router from '../router'
+import HTTP from '../http' 
 export default {
     props: ["id"],
   components: {
@@ -122,23 +125,35 @@ export default {
     },
     data(){
         return{
-            title: 'lots of garbage on roads',
-            category : 'social',
-            date : '12-12-12' ,
-            name : 'kuldeep',
-            data: []
+            data: {},
+            flag : 0 ,
+            imageSrc : 'http://127.0.0.1:3333/uploads/blogPicture/',
         }
     },
-    mounted() {
-        this.testing();
-        this.data = store.state.data;
+    beforeMount() {
+        this.getData();
         console.log(this.id);
-        console.log(store.state.data);
     },
     methods: {
-        testing(){
-            console.log(this.data);
-        }
+    async getData(){
+         let data = new FormData()
+         data.append('id', this.id)
+         let options = {
+                    headers: {
+                    'content-type': 'form-data'
+                    }
+                }
+         let url = 'http://127.0.0.1:3333/getParticularPostData'
+         
+         await HTTP().post(url ,data ,options).then((data)=>{
+                this.data = data.data
+                console.log(this.data)
+                store.state.particularPostLat = this.data.lat ;
+                store.state.particularPostLng = this.data.lng ;
+                console.log(store.state.particularPostLat);
+                this.flag=1;
+               }) 
+     }        
     },
 }
 </script>
