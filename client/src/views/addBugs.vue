@@ -52,8 +52,8 @@
                          
 					>
 				</v-flex>
-                <v-btn @click="submit" color="teal" >
-                Save
+                <v-btn  @click="submit" color="teal white--text" >
+                Add Bug
                 </v-btn>
 
             </v-form>

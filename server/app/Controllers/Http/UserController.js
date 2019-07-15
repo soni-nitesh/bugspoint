@@ -6,8 +6,7 @@ const Encryption = use('Encryption')
 class UserController {
 
     async register({request})
-    { console.log('test') 
-      
+    { 
     const rules = {
       email: 'unique:users',
       mobile: 'unique:users'
@@ -37,14 +36,13 @@ class UserController {
      password
  }); 
     user.save();
-    console.log(user);
+
     return 0;
     }    
 
       async login({auth, request, session, reponse}){
         const { log, password } = request.all()     
         const user = await User.query().where('email',log).first()
-        console.log(user);
         if(user)
         { 
             const passwordVerified  = await Hash.verify(password,user.password )
@@ -57,9 +55,9 @@ class UserController {
         }
         else{
             const user = await User.query().where('mobile',log).first()
-            console.log(user);
+ 
         if(user)
-        { console.log(user);
+        { 
             const passwordVerified  = await Hash.verify(password,user.password )
             if(passwordVerified)
             { 
@@ -69,7 +67,7 @@ class UserController {
             }
         }
        }
-       console.log(user);
+
        return 0
       }  
      }

@@ -2,7 +2,7 @@
 <v-container fluid>
     <v-layout style='margin-top:50px' row>
       <google-map />
-   <v-flex xs12 md4 pa-3 mt-5 v-for="(data, index) in data" :key="index">
+   <v-flex xs12 md4 pa-3 v-for="(data, index) in data" :key="index">
            <v-hover>
       <v-card mt-2
        slot-scope="{ hover }"
@@ -13,7 +13,8 @@
       <v-img          
           id="iamge"
           class=''
-          aspect-ratio="2"
+          contain
+          aspect-ratio="1.9"
           :src="imageSrc + data.image"
       >
         <v-expand-transition>
@@ -40,7 +41,7 @@
         >
           <v-text icon class='text-none'> By : {{data.user_name}}</v-text>
         </v-btn>
-        <div class="font-weight-light grey--text title mb-2"><p>{{data.created_at}}</p></div>
+        <div class="font-weight-light grey--text subheading mb-2"><p>{{date}}</p></div>
         <h6 class="subheading font-weight-light cyan--text mb-2">{{data.description}}</h6>
         <div class="font-weight-light title mb-2">
         {{data.category}}
@@ -85,7 +86,7 @@ import store from "../store"
       .then( async (data) => {
         if(await data.data){
          this.data = await [...data.data];
-         this.length = await this.data.length;
+          this.data.reverse();
          }
          } )
       .catch(error => console.log(error))     

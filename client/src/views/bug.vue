@@ -19,12 +19,25 @@
                         pl-3
                         >
                         <v-flex shrink>
-                            <v-img
+                            <v-dialog v-model="dialog" persistent color="cyan lighten-1" justify-center width="800px" height="800px" >
+      <template v-slot:activator="{ on }">
+        <v-btn flat dark v-on="on"> <v-img mb-3 
                             height="180"
                             width="180"
                             class='img-fluid'
+                            contain
                             :src="imageSrc + data.image"
-                            ></v-img>
+                            ></v-img></v-btn>
+      </template>
+                            <v-btn color="green darken-1"  @click="dialog = false">Close</v-btn>
+                            <v-img
+                            height="500px"
+                            contain
+                            aspect-ratio="1"
+                            width="750px"
+                            :src="imageSrc + data.image"
+                            ></v-img> 
+                            </v-dialog>
                         </v-flex>
                         <v-flex >
                             <v-layout
@@ -125,6 +138,7 @@ export default {
     },
     data(){
         return{
+            dialog: false,
             data: {},
             flag : 0 ,
             imageSrc : 'http://127.0.0.1:3333/uploads/blogPicture/',

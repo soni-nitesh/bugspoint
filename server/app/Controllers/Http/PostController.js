@@ -6,7 +6,7 @@ const User = use('App/Models/Post')
 const Helpers = use('Helpers')
 class PostController {
     async addPost({request}){     
-         console.log('test');
+      
          const token = request.input('token')        
          const description = request.input('description')
          const category =  request.input('category')
@@ -26,8 +26,7 @@ class PostController {
           await profilePic.move(Helpers.publicPath('uploads/blogPicture'), {
             name: image,
           })  
-              console.log(description);         
-          const post = await Post.create({
+            const post = await Post.create({
             user_id,
             user_name, 
             lat ,
@@ -36,13 +35,12 @@ class PostController {
             category,
             image 
         }); 
-           console.log(post);
+      
            post.save();
 
     }
     async getPostData({request,response}){
       const post = await Post.all();
-      console.log(post.toJSON());
       return response.send(post.toJSON());
     }
 
