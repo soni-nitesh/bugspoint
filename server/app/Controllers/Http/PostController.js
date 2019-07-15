@@ -6,15 +6,16 @@ const User = use('App/Models/Post')
 const Helpers = use('Helpers')
 class PostController {
     async addPost({request}){     
-   
-        const token = request.input('token')        
-        const title = request.input('title')
+         console.log('test');
+         const token = request.input('token')        
+         const description = request.input('description')
          const category =  request.input('category')
          const lat =  request.input('lat')
          const lng = request.input('lng')
          const decrypted = Encryption.decrypt(token)
          const user_id = decrypted.id
-        const profilePic = request.file('image', {
+         const user_name = decrypted.name
+         const profilePic = request.file('image', {
             types: ['image'],
             size: '2mb'
           })
@@ -25,16 +26,17 @@ class PostController {
           await profilePic.move(Helpers.publicPath('uploads/blogPicture'), {
             name: image,
           })  
-           
+              console.log(description);         
           const post = await Post.create({
             user_id,
+            user_name, 
             lat ,
             lng,
-            title ,
+            description,
             category,
             image 
         }); 
-         
+           console.log(post);
            post.save();
 
     }
