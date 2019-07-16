@@ -7,9 +7,9 @@ class LikeSchema extends Schema {
   up () {
     this.create('likes', (table) => {
       table.increments()
-      table.string('user_id', 4).notNullable()
+      table.json('user_id').notNullable()
       table.string('post_id',4).notNullable()
-      table.string('count',20).notNullable()
+      table.integer('count',20).notNullable()
       table.timestamps()
     })
   }

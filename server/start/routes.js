@@ -26,5 +26,5 @@ Route.get('/getPostData','PostController.getPostData')
 Route.post('/getParticularPostData','PostController.getParticularPostData')
 Route.post('/getUserPost','PostController.getUserPost')
 Route.post('/deletePost','PostController.deletePost')
-
-
+Route.post('/likePost','PostController.likePost')
+Route.post('/viewlikes','PostController.viewlikes')

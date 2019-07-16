@@ -30,13 +30,13 @@
                             ></v-img></v-btn>
       </template>
                             <v-btn color="green darken-1"  @click="dialog = false">Close</v-btn>
-                            <v-img
+                            <!-- <v-img
                             height="500px"
                             contain
                             aspect-ratio="1"
                             width="750px"
                             :src="imageSrc + data.image"
-                            ></v-img> 
+                            ></v-img>  -->
                             </v-dialog>
                         </v-flex>
                         <v-flex >
@@ -70,8 +70,9 @@
                         max-width="600"
                         class="mx-auto"
                     >
-                        <v-card-title><b><span class='headline'>Supporters : </span><span class='display-1'> 5 </span></b><v-btn icon disabled>
-                            <v-icon>thumb_up</v-icon>
+                        <v-card-title><b><span class='headline'>Supporters : </span><span class='display-1'> {{ likes}} </span></b>
+                        <v-btn icon  @click='likePost'>
+                            <v-icon v-bind:style="{ color: color}">thumb_up</v-icon>
                             </v-btn>
                         </v-card-title>
                          <social-sharing url="http://localhost:8080/bug/2"
@@ -138,9 +139,11 @@ export default {
     },
     data(){
         return{
+            likes: 0,
             dialog: false,
             data: {},
             flag : 0 ,
+            color: '',
             imageSrc : 'http://127.0.0.1:3333/uploads/blogPicture/',
         }
     },
@@ -163,12 +166,52 @@ export default {
                 this.data = data.data
                 console.log(this.data)
                 store.state.particularPostLat = this.data.lat ;
-                store.state.particularPostLng = this.data.lng ;
-                console.log(store.state.particularPostLat);
+                store.state.particularPostLng = this.data.lng 
                 this.flag=1;
                }) 
-     }        
+               this.viewlikes();
+     },
+    async  likePost(){
+         let data = new FormData()         
+         data.append('id', this.id)
+         data.append('token',localStorage.getItem('token'))
+         let options = {
+                    headers: {
+                    'content-type': 'form-data'
+                    }
+                }
+         let url = 'http://127.0.0.1:3333/likePost'
+         await HTTP().post(url ,data ,options).then((data)=>{
+                console.log(data.data);
+                this.likes = data.data.count ;
+                  
+     })
+        this.viewlikes();
     },
+    viewlikes(){
+          let data = new FormData()         
+         data.append('id', this.id)
+         data.append('token',localStorage.getItem('token'))
+         let options = {
+                    headers: {
+                    'content-type': 'form-data'
+                    }
+                }
+         let url = 'http://127.0.0.1:3333/viewlikes'
+          HTTP().post(url ,data ,options).then((data)=>{
+              this.likes = data.data[1];
+              if(data.data[0] == -1)
+              {
+                  this.color = 'grey'
+              }else
+              {
+                  this.color = 'blue'
+              }
+              
+        
+    })
+    }
+}
 }
 </script>
 
