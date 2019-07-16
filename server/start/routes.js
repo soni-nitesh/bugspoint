@@ -24,4 +24,5 @@ Route.post('/login', 'UserController.login')
 Route.post('/addPost','PostController.addPost')
 Route.get('/getPostData','PostController.getPostData')
 Route.post('/getParticularPostData','PostController.getParticularPostData')
-
+Route.post('/likePost','PostController.likePost')
+Route.post('/viewlikes','PostController.viewlikes')
