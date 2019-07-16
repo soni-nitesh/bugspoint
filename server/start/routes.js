@@ -24,4 +24,7 @@ Route.post('/login', 'UserController.login')
 Route.post('/addPost','PostController.addPost')
 Route.get('/getPostData','PostController.getPostData')
 Route.post('/getParticularPostData','PostController.getParticularPostData')
+Route.post('/getUserPost','PostController.getUserPost')
+Route.post('/deletePost','PostController.deletePost')
+
 

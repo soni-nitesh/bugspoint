@@ -3,7 +3,7 @@
 const Encryption = use('Encryption')
 const Post = use('App/Models/Post')
 const User = use('App/Models/User')
-const Like = use('App/models/Like')
+//const Like = use('App/models/Like')
 const Helpers = use('Helpers')
 class PostController {
     async addPost({request}){     
@@ -51,6 +51,26 @@ class PostController {
       return response.send(post.toJSON())
 
     }
+    async getUserPost({request,response}){
+       const token =  request.input('token')
+       const decrypted = Encryption.decrypt(token)
+       const id = decrypted.id
+      let post = await Post.query().where('user_id', id).fetch();
+      return response.send(post.toJSON())
+
+    }
+    async deletePost({request}){
+      console.log('test');
+       
+        // const id = request.input('id');  
+        let post = await Post.query().where('id',request.input('id')).first()
+         const temp = post.toJSON();
+        console.log(temp); 
+        await post.delete();
+        return temp;  
+    }
+
+
 }
 
 module.exports = PostController
