@@ -250,7 +250,7 @@ export default {
                 
   await HTTP().post(url, data, options).then((data)=>{
      localStorage.setItem('token', data.data);
-      this.$router.push({name:'profile'})
+      this.$router.push({name:'myprofile'})
   }) 
 },
     goToPost(id){
