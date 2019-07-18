@@ -21,25 +21,35 @@
               <v-list>
                   <v-subheader>Main</v-subheader>
 
-          <v-list-tile
-            v-for="item in items"
-            :key="item.title"
-            avatar
-            @click=""
-          >
+          <v-list-tile>
             <v-list-tile-action>
-              <v-icon  color="grey">{{item.icon}}</v-icon>
-            </v-list-tile-action>
-
+              <v-icon  color="grey">notification_important</v-icon>
+              </v-list-tile-action>
             <v-list-tile-content>
-              <v-list-tile-title v-text="item.title"></v-list-tile-title>
+              <v-list-tile-title>My Notification</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+          
+                    <v-list-tile @click="profile = true; bugd = false">
+          <v-list-tile-action>
+              <v-icon  color="grey">person</v-icon>
+              </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>Edit Profile</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+                    <v-list-tile>
+                      <v-list-tile-action>
+              <v-icon  color="grey">lock</v-icon> </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>Change Password</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
         <v-divider></v-divider>
               <v-list>
                   <v-subheader>Bugs</v-subheader>
 
-          <v-list-tile @click="bugd = true">
+          <v-list-tile @click="bugd = true, profile= false">
             <v-list-tile-action>
               <v-icon  color="grey">list</v-icon>
             </v-list-tile-action>
@@ -65,7 +75,7 @@
         </v-card>
         </v-flex>
         <v-flex xs12 md9 pa-3>
-        <v-card height="500px" v-if="!bugd">
+        <v-card height="500px" v-if="!bugd && !profile">
             <v-subheader>My Notification</v-subheader>
           <v-card-text></v-card-text>
         </v-card>
@@ -122,6 +132,61 @@
                </v-flex>
                </v-layout>
         </v-card>
+        <v-card>
+        <v-flex pa-4 md9 xs12 v-if="profile" >
+          <v-subheader>Edit Profile</v-subheader>
+           <form>
+  <div class="form-row">
+    <div class="col-md-12 mb-3">
+      <label for="validationServer01">Name</label>
+      <input type="text" class="form-control" v-model="name" required>
+
+    </div>
+    <div class="col-md-12 mb-3">
+      <label for="validationServerUsername">Email</label>
+      <div class="input-group">
+        <input type="email" class="form-control" v-model="email" aria-describedby="inputGroupPrepend3" required>
+      </div>
+    </div>
+    <div class="col-md-12 mb-3">
+      <label for="validationServerUsername">Mobile no.</label>
+      <div class="input-group">
+        <input type="text" class="form-control" v-model="mobile" aria-describedby="inputGroupPrepend3" required>
+      </div>
+    </div>
+
+  </div>
+  <div class="form-row">
+    <div class="col-md-12 mb-3">
+      <label for="validationServer03">Birth Date</label>
+      <input type="date" class="form-control">
+    </div>
+  </div>
+    <div class="form-row">
+    <div class="col-md-12 mb-3">
+ <select class="custom-select mr-sm-2"  v-model="gender">
+        <option disabled value="">Gender</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+
+      </select>
+ </div>
+  </div>
+  				<v-flex xs12 class="text-xs-center text-sm-center text-md-center text-lg-center">
+					<img :src="imageUrl" height="150" v-if="imageUrl"/>
+                    <v-text-field label="Profile Picture" @click='pickFile'  :rules="imageRules" v-model='imageName'  prepend-icon='attach_file' ></v-text-field>
+					<input
+						type="file"
+						style="display: none"
+						ref="image"
+						accept="image/*"
+						@change="onFilePicked">
+				</v-flex>
+
+  <button class="btn btn-primary" type="submit" @click="sendData">Submit</button>
+</form>
+        </v-flex>
+        </v-card>
       </v-flex>
       </v-layout>
      </v-container>
@@ -137,23 +202,24 @@ import store from "../store"
 export default {
       data () {
       return {
-          data:[],
-          imageSrc:'http://127.0.0.1:3333/uploads/blogPicture/',
-        items: [
-          { icon: "notification_important", title: 'My Notification' },
-          { title: 'Edit Profile', icon:'person'},
-          { title: 'Change Password', icon:'lock' },
-        ],
-       bug: [
-          { title: 'My Bugs', icon:'list' },
-          { icon: "add_circle", title: 'Add Bug' },
-       ],
+       data:[],
+       imageSrc:'http://127.0.0.1:3333/uploads/blogPicture/',
+       profile:false,
        bugd: false,
-
+       name:'',
+       email:'',
+       dob: '',
+       gender: '',
+       imageName: '',
+		   imageUrl: '',
+       imageFile: '',
+       mobile:''
       }
     },
      created() {
-        this.getUserPost();
+      var bugd = localStorage.getItem('bugd');
+         this.getUserPost();
+         this.editprofile();
     },
      methods: {
    async getUserPost(){
@@ -165,11 +231,31 @@ export default {
         this.data = [...data.data];
         
   })    },
+   async sendData(){
+               let data = new FormData()
+                 data.append('name', this.name)
+                 data.append('email',this.email)
+                 data.append('gender',this.gender)
+                 data.append('dob',this.dob)
+                 data.append('image',this.imageName)
+                 data.append('mobile',this.mobile)
+                 data.append('id',this.id)
+                let url = 'http://127.0.0.1:3333/updateprofile'
+                let options = {
+                    headers: {
+                    'content-type': 'multipart/form-data'
+                    }
+                }
+                
+  await HTTP().post(url, data, options).then(()=>{
+      this.$router.push({name:'profile'})
+  }) 
+},
     goToPost(id){
       this.$router.push({name:'bug' , params: { id: id }})
     },
     async deletePost(id){
-                 
+
           let data = new FormData()
                  data.append('id',id)
 
@@ -189,11 +275,49 @@ export default {
 
     })
     },
-     logout_function(){
+           pickFile () {
+            this.$refs.image.click ()
+        },
+		
+		onFilePicked (e) {
+            this.image = e.target.files[0] ;
+			const files = e.target.files
+			if(files[0] !== undefined) {
+				this.imageName = files[0].name
+				if(this.imageName.lastIndexOf('.') <= 0) {
+					return
+				}
+				const fr = new FileReader ()
+				fr.readAsDataURL(files[0])
+				fr.addEventListener('load', () => {
+					this.imageUrl = fr.result
+					this.imageFile = files[0] // this is an image file that can be sent to server...
+				})
+			} else {
+				this.imageName = ''
+				this.imageFile = ''
+				this.imageUrl = ''
+			}
+		},  
+       logout_function(){
         localStorage.removeItem('token');
         store.dispatch('login_logout')
         this.$router.push({name:'home'})
-      }
+      },
+      async editprofile(){
+        var token =   localStorage.getItem('token');
+         let data = new FormData()
+                 data.append('token',token);
+
+         let url = 'http://127.0.0.1:3333/editprofile'               
+    await HTTP().post(url,data).then((data)=>{
+        this.id = data.data.id;
+        this.name = data.data.name;
+        this.mobile = data.data.mobile; 
+        this.email = data.data.email; 
+    })
+      },
+      
 }}
 </script>
 

@@ -103,7 +103,6 @@ class PostController {
         return temp;  
     }
 
-
 }
 
 module.exports = PostController

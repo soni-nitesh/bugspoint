@@ -69,7 +69,50 @@ class UserController {
        }
 
        return 0
-      }  
+      }
+      async editprofile({request, response}){
+        const token = Encryption.decrypt(request.input('token'))
+        const name = token.name;
+        const email= token.email;
+        const id =token.id;
+        const mobile = token.mobile;
+        return response.send({id,name,mobile, email});
+      }
+  
+
+      async updateprofile({request}){
+        console.log("test");  
+        const id = request.input('id');
+          const user = await User.query().where('id',id).first()
+          console.log(user.toJSON());
+         if(user){
+        let password = user.password;
+        console.log(password);
+        user.delete();
+        console.log(password)
+        let {
+          name,
+          email,
+          gender,
+          dob,
+          image,
+          mobile
+      } = request.all(); 
+        
+      const user = await User.create({
+         name,
+         email,
+         mobile,
+         password,
+         gender,
+         image,
+         dob
+     }); 
+        user.save();
+         }
+        return 0;
+      }
+
      }
     
 module.exports = UserController

@@ -21,22 +21,25 @@
                         <v-flex shrink>
                             <v-dialog v-model="dialog" persistent color="cyan lighten-1" justify-center width="800px" height="800px" >
       <template v-slot:activator="{ on }">
-        <v-btn flat dark v-on="on"> <v-img mb-3 
+                       <v-img mb-3 
                             height="180"
+                            v-on="on"
                             width="180"
                             class='img-fluid'
                             contain
                             :src="imageSrc + data.image"
-                            ></v-img></v-btn>
+                            ></v-img>
       </template>
-                            <v-btn color="green darken-1"  @click="dialog = false">Close</v-btn>
-                            <!-- <v-img
+                         <v-flex xs12 md12>
+                           <v-img
                             height="500px"
-                            contain
+                            contain                           
                             aspect-ratio="1"
-                            width="750px"
+                            width="800px"
                             :src="imageSrc + data.image"
-                            ></v-img>  -->
+                            ></v-img> 
+                            <v-btn block  @click="dialog = false">Close</v-btn>
+                             </v-flex>
                             </v-dialog>
                         </v-flex>
                         <v-flex >

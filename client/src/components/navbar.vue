@@ -29,7 +29,7 @@
         <v-list-tile to="/myprofile" route>
           <v-list-tile-title > <v-icon>face</v-icon> Profile</v-list-tile-title>
         </v-list-tile>
-                <v-list-tile>
+                <v-list-tile @click="profile">
           <v-list-tile-title><v-icon>bug_report</v-icon>My Bugs</v-list-tile-title>
         </v-list-tile>
                 <v-list-tile>
@@ -37,10 +37,10 @@
         </v-list-tile>
       </v-list>
     </v-menu>
-            <!-- <v-btn class='text-none' @click='logout_function' v-if='logout' flat>Logout</v-btn> -->
             
-            </v-toolbar-items>
+        </v-toolbar-items>
         </v-toolbar>
+        
         <!-- Drawer for mobile size user -->
         <v-navigation-drawer
             v-model="drawer"
@@ -153,6 +153,7 @@ export default {
   
   data () {
     return {
+      bugd:true,
       drawer: false,
        items: [
           { title: 'Home', icon: 'home' , route:'/' },
@@ -186,6 +187,11 @@ export default {
       ])
     },
     methods: {
+      profile(){
+        localStorage.setItem('bugd', true);
+         this.$router.push({name:'profile' })
+      },
+
       logout_function(){
         localStorage.removeItem('token');
         store.dispatch('login_logout')

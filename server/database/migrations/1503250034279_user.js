@@ -11,6 +11,9 @@ class UserSchema extends Schema {
       table.string('email', 254).notNullable().unique()
       table.string('mobile', 15).notNullable().unique()
       table.string('password', 60).notNullable()
+      table.string('gender', 10)
+      table.string('image', 100)
+      table.string('dob', 10)
       table.timestamps()
     })
   }
