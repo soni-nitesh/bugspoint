@@ -136,10 +136,10 @@ class PostController {
       const post_id = request.input('id');
       let comment = await Comment.findBy('post_id',post_id);
       var data ;
-      console.log(decrypted)
+     
       if(decrypted.image)
       {
-       data  = {'userId':user_id,'comment':commentText,'userName':decrypted.name,'avatar':decrypted.image} ;
+       data  = {'userId':user_id,'comment':commentText,'userName':decrypted.name,'avatar':'http://127.0.0.1:3333/uploads/blogPicture/'+decrypted.image} ;
       }
       else
       {
