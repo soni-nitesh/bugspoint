@@ -135,7 +135,7 @@
         <v-card>
         <v-flex pa-4 md9 xs12 v-if="profile" >
           <v-subheader>Edit Profile</v-subheader>
-           <form>
+           <form >
   <div class="form-row">
     <div class="col-md-12 mb-3">
       <label for="validationServer01">Name</label>
@@ -250,7 +250,7 @@ export default {
                 
   await HTTP().post(url, data, options).then((data)=>{
      localStorage.setItem('token', data.data);
-      this.$router.push({name:'profile'})
+      this.$router.push({name:'home'})
   }) 
 },
     goToPost(id){
@@ -327,8 +327,7 @@ export default {
         this.imageName= data.data.image;
         if(this.imageName){
           this.imageUrl = 'http://127.0.0.1:3333/uploads/blogPicture/'+this.imageName
-          alert(this.imageUrl);
-        }
+          }
     })
       },
       
