@@ -10,7 +10,6 @@ const fs = require('fs');
 
 class PostController {
     async addPost({request}){     
-      
          const token = request.input('token')        
          const description = request.input('description')
          const category =  request.input('category')
@@ -136,7 +135,16 @@ class PostController {
       const commentText = request.input('commentText'); 
       const post_id = request.input('id');
       let comment = await Comment.findBy('post_id',post_id);
-      let data  = {'userId':user_id,'comment':commentText,'userName':decrypted.name,'avatar':'https://steemitimages.com/p/3HaJVw3AYyXBPPdfDwZuiZRFoYNWo5YFpjHs9b2Qx36AHvcSRbrj8zZWXz3iU5H1ob75cM844F6bQkhQDYpRmSYpbU5RE5xQLeCf5yg?format=match&mode=fit&width=640'} ;
+      var data ;
+      console.log(decrypted)
+      if(decrypted.image)
+      {
+       data  = {'userId':user_id,'comment':commentText,'userName':decrypted.name,'avatar':decrypted.image} ;
+      }
+      else
+      {
+      data  = {'userId':user_id,'comment':commentText,'userName':decrypted.name,'avatar':'https://steemitimages.com/p/3HaJVw3AYyXBPPdfDwZuiZRFoYNWo5YFpjHs9b2Qx36AHvcSRbrj8zZWXz3iU5H1ob75cM844F6bQkhQDYpRmSYpbU5RE5xQLeCf5yg?format=match&mode=fit&width=640'} ;
+      }
       var temp = JSON.parse(comment.comment);
       temp.push(data);
       comment.comment = JSON.stringify(temp);
