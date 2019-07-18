@@ -86,7 +86,7 @@ class UserController {
   
 
       async updateprofile({request}){
-        console.log("test");  
+        console.log("pic");  
 
         const id = request.input('id');
           const user = await User.query().where('id',id).first()

@@ -188,7 +188,6 @@ export default {
     },
     methods: {
       profile(){
-        localStorage.setItem('bugd', true);
          this.$router.push({name:'profile' })
       },
 
