@@ -3,6 +3,7 @@ const { validate } = use('Validator')
 const User = use('App/Models/User')
 const Hash = use('Hash')
 const Encryption = use('Encryption')
+const Helpers = use('Helpers')
 class UserController {
 
     async register({request})
@@ -82,34 +83,35 @@ class UserController {
 
       async updateprofile({request}){
         console.log("test");  
+
         const id = request.input('id');
           const user = await User.query().where('id',id).first()
-          console.log(user.toJSON());
-         if(user){
-        let password = user.password;
-        console.log(password);
-        user.delete();
-        console.log(password)
-        let {
+          const profilePic = request.file('image', {
+            types: ['image'],
+            size: '2mb'
+          })
+          console.log(profilePic)
+          const image = new Date().getTime()+'.'+profilePic.subtype
+          await profilePic.move(Helpers.publicPath('uploads/blogPicture'), {
+            name: image,
+           })     
+    console.log(image);
+          let {
           name,
           email,
           gender,
           dob,
-          image,
           mobile
       } = request.all(); 
-        
-      const user = await User.create({
-         name,
-         email,
-         mobile,
-         password,
-         gender,
-         image,
-         dob
-     }); 
+      user.name = name;
+      user.email = email;
+      user.gender = gender;
+      user.mobile = mobile;
+      user.dob = dob;
+      user.image = image
+        console.log(user); 
         user.save();
-         }
+         
         return 0;
       }
 

@@ -159,7 +159,7 @@
   <div class="form-row">
     <div class="col-md-12 mb-3">
       <label for="validationServer03">Birth Date</label>
-      <input type="date" class="form-control">
+      <input type="date" v-model="dob" class="form-control">
     </div>
   </div>
     <div class="form-row">
@@ -213,6 +213,7 @@ export default {
        imageName: '',
 		   imageUrl: '',
        imageFile: '',
+       image:'',
        mobile:''
       }
     },
@@ -237,7 +238,7 @@ export default {
                  data.append('email',this.email)
                  data.append('gender',this.gender)
                  data.append('dob',this.dob)
-                 data.append('image',this.imageName)
+                 data.append('image',this.image)
                  data.append('mobile',this.mobile)
                  data.append('id',this.id)
                 let url = 'http://127.0.0.1:3333/updateprofile'
