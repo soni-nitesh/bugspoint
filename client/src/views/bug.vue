@@ -112,19 +112,53 @@
                         label="comment"
                         rows="1"
                         prepend-icon="comment"
+                        v-model="commentText"
                         ></v-textarea>
-                        <v-btn  text color="#27C59B" >Comment</v-btn>
+                        <v-btn  text color="#27C59B" @click='comment' >Comment</v-btn>
                         </v-flex>                    
              </v-card>
          </div>
          <div>
-              <v-card                    
-                    class="mx-auto mt-3"
-                > 
-                <v-card-title ><h5>Comment's</h5></v-card-title>
-                <v-card-text></v-card-text>
-                                             
-             </v-card>
+
+                    <v-layout row>
+    <v-flex xs12 sm12 class='mt-2 '>
+      <v-card>
+        <v-list two-line>
+          <template v-for="(item, index) in items">
+            <v-subheader
+              v-if="item.header"
+              :key="item.header"
+            >
+              {{ item.header }}
+            </v-subheader>
+
+            <v-divider
+              v-else-if="item.divider"
+              :key="index"
+              :inset="item.inset"
+            ></v-divider>
+
+            <v-list-tile
+              v-else
+              :key="item.title"
+              avatar
+            >
+              <v-list-tile-avatar>
+                <img :src="item.avatar">
+              </v-list-tile-avatar>
+
+              <v-list-tile-content>
+                <v-list-tile-title v-html="item.userName"></v-list-tile-title>
+                <v-list-tile-sub-title v-html="item.comment"></v-list-tile-sub-title>
+              </v-list-tile-content>
+            </v-list-tile>
+          </template>
+        </v-list>
+      </v-card>
+    </v-flex>
+  </v-layout>
+
+
          </div>
     </v-container>
 </template>
@@ -147,7 +181,9 @@ export default {
             data: {},
             flag : 0 ,
             color: '',
+            commentText:'',
             imageSrc : 'http://127.0.0.1:3333/uploads/blogPicture/',
+             items: [ ]
         }
     },
     beforeMount() {
@@ -172,11 +208,17 @@ export default {
                 store.state.particularPostLng = this.data.lng 
                 this.flag=1;
                }) 
-               this.viewlikes();
+              await this.viewlikes();
+              await this.viewComment(); 
      },
     async  likePost(){
          let data = new FormData()         
          data.append('id', this.id)
+         if(!localStorage.getItem('token'))
+         {
+             alert('You must login first')
+             return 0;
+         }
          data.append('token',localStorage.getItem('token'))
          let options = {
                     headers: {
@@ -192,9 +234,16 @@ export default {
         this.viewlikes();
     },
     viewlikes(){
-          let data = new FormData()         
+         let data = new FormData()         
          data.append('id', this.id)
+         if(!localStorage.getItem('token'))
+         {
+             data.append('token',1)
+         }
+         else
+         {
          data.append('token',localStorage.getItem('token'))
+         }
          let options = {
                     headers: {
                     'content-type': 'form-data'
@@ -209,9 +258,53 @@ export default {
               }else
               {
                   this.color = 'blue'
-              }
-              
-        
+              }                  
+    })
+    },
+    async comment(){
+        if(this.commentText == '')
+        {   alert('please write comment');
+            return 0;
+        }
+        if(!localStorage.getItem('token'))
+         {
+             alert('You must login first')
+             return 0;
+         }
+        let data = new FormData()         
+         data.append('id', this.id)
+         data.append('token',localStorage.getItem('token'))
+         data.append('commentText',this.commentText)
+         this.commentText = ''
+         let options = {
+                    headers: {
+                    'content-type': 'form-data'
+                    }
+                }
+         let url = 'http://127.0.0.1:3333/commentPost'
+         await HTTP().post(url ,data ,options).then((data)=>{
+                console.log(data.data);
+                this.likes = data.data.count ;                  
+     })      
+     this.viewComment(); 
+    },
+    viewComment(){
+        let data = new FormData()         
+         data.append('id', this.id)
+         let options = {
+                    headers: {
+                    'content-type': 'form-data'
+                    }
+                }
+         let url = 'http://127.0.0.1:3333/viewComment'
+          HTTP().post(url ,data ,options).then((data)=>{
+              this.items = [];
+              this.items.push({ header: 'Comments' });
+              for(var i=0;i<data.data.length;i++)
+              {
+                  this.items.push(data.data[i])
+                  this.items.push({ divider: true, inset: true })
+              }                             
     })
     }
 }
