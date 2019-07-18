@@ -73,16 +73,20 @@ class UserController {
       }
       async editprofile({request, response}){
         const token = Encryption.decrypt(request.input('token'))
-        const name = token.name;
-        const email= token.email;
-        const id =token.id;
-        const mobile = token.mobile;
-        return response.send({id,name,mobile, email});
+
+         const name = token.name;
+         const email= token.email;
+         const id =token.id;
+         const mobile = token.mobile;
+         const dob = token.dob;
+         const gender = token.gender;
+         const image = token.image;
+         return response.send({id,image, gender ,dob, name, mobile, email});
       }
   
 
       async updateprofile({request}){
-        console.log("test");  
+        console.log("pic");  
 
         const id = request.input('id');
           const user = await User.query().where('id',id).first()
@@ -111,8 +115,10 @@ class UserController {
       user.image = image
         console.log(user); 
         user.save();
+        const token =  Encryption.encrypt(user)
          
-        return 0;
+        return(token)   
+        
       }
 
      }

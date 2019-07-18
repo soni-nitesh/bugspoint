@@ -174,7 +174,7 @@
   </div>
   				<v-flex xs12 class="text-xs-center text-sm-center text-md-center text-lg-center">
 					<img :src="imageUrl" height="150" v-if="imageUrl"/>
-                    <v-text-field label="Profile Picture" @click='pickFile'  :rules="imageRules" v-model='imageName'  prepend-icon='attach_file' ></v-text-field>
+                    <v-text-field label="Profile Picture" @click='pickFile' v-model='imageName'  prepend-icon='attach_file' ></v-text-field>
 					<input
 						type="file"
 						style="display: none"
@@ -248,7 +248,8 @@ export default {
                     }
                 }
                 
-  await HTTP().post(url, data, options).then(()=>{
+  await HTTP().post(url, data, options).then((data)=>{
+     localStorage.setItem('token', data.data);
       this.$router.push({name:'profile'})
   }) 
 },
@@ -306,16 +307,28 @@ export default {
         this.$router.push({name:'home'})
       },
       async editprofile(){
-        var token =   localStorage.getItem('token');
+        console.log('test');
+        const token =   localStorage.getItem('token');
          let data = new FormData()
                  data.append('token',token);
-
+               let options = {
+                    headers: {
+                    'content-type': 'multipart/form-data'
+                    }
+                }
          let url = 'http://127.0.0.1:3333/editprofile'               
-    await HTTP().post(url,data).then((data)=>{
+    await HTTP().post(url,data,options).then((data)=>{
         this.id = data.data.id;
         this.name = data.data.name;
         this.mobile = data.data.mobile; 
         this.email = data.data.email; 
+        this.gender = data.data.gender;
+        this.dob= data.data.dob;
+        this.imageName= data.data.image;
+        if(this.imageName){
+          this.imageUrl = 'http://127.0.0.1:3333/uploads/blogPicture/'+this.imageName
+          alert(this.imageUrl);
+        }
     })
       },
       

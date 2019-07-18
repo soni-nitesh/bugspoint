@@ -93,6 +93,7 @@ class PostController {
       {
       let like = await Like.findBy('post_id',request.input('id'));
       const token = Encryption.decrypt(request.input('token'))
+      console.log(token)
       const user_id = token.id ;
       var temp = JSON.parse(like.user_id);
       var check = temp.indexOf(user_id);
