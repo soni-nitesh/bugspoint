@@ -135,7 +135,13 @@
         <v-card>
         <v-flex pa-4 md9 xs12 v-if="profile" >
           <v-subheader>Edit Profile</v-subheader>
-           <form >
+           <v-form 
+           ref="form"
+            
+                lazy-validation
+                enctype="multipart/form-data"
+                method='POST' 
+                >
   <div class="form-row">
     <div class="col-md-12 mb-3">
       <label for="validationServer01">Name</label>
@@ -183,8 +189,8 @@
 						@change="onFilePicked">
 				</v-flex>
 
-  <button class="btn btn-primary" type="submit" @click="sendData">Submit</button>
-</form>
+  <button class="btn btn-primary" type="button" @click="sendData">Submit</button>
+</v-form>
         </v-flex>
         </v-card>
       </v-flex>
@@ -249,9 +255,10 @@ export default {
                 }
                 
   await HTTP().post(url, data, options).then((data)=>{
-     localStorage.setItem('token', data.data);
-      this.$router.push({name:'profile'})
-  }) 
+    localStorage.removeItem('token');
+    localStorage.setItem('token',data.data)
+     this.$router.push({name:'home' })
+  })
 },
     goToPost(id){
       this.$router.push({name:'bug' , params: { id: id }})
@@ -283,6 +290,7 @@ export default {
 		
 		onFilePicked (e) {
             this.image = e.target.files[0] ;
+            console.log(this.image);
 			const files = e.target.files
 			if(files[0] !== undefined) {
 				this.imageName = files[0].name
@@ -310,7 +318,7 @@ export default {
         console.log('test');
         const token =   localStorage.getItem('token');
          let data = new FormData()
-                 data.append('token',token);
+          data.append('token',token);
                let options = {
                     headers: {
                     'content-type': 'multipart/form-data'

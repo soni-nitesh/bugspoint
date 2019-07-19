@@ -39,7 +39,7 @@ const router= new Router({
       component: () => import('./views/addBugs.vue'),
     },
     {
-      path: '/myprofile',
+      path: '/profile',
       name: 'profile',
       component: () => import('./views/profile.vue'),
     },

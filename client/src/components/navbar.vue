@@ -26,7 +26,7 @@
         </v-btn>
       </template>
       <v-list>
-        <v-list-tile to="/myprofile" route>
+        <v-list-tile to="/profile" route>
           <v-list-tile-title > <v-icon>face</v-icon> Profile</v-list-tile-title>
         </v-list-tile>
                 <v-list-tile @click="profile">
@@ -130,7 +130,7 @@
             </v-list-tile>
             </template>
 
-          <v-list-tile to="/myprofile" route>
+          <v-list-tile to="/profile" route>
             <v-list-tile-title>Profile</v-list-tile-title>
           </v-list-tile>
           <v-list-tile>

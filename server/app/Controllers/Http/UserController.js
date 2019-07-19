@@ -73,7 +73,6 @@ class UserController {
       }
       async editprofile({request, response}){
         const token = Encryption.decrypt(request.input('token'))
-
          const name = token.name;
          const email= token.email;
          const id =token.id;
@@ -85,21 +84,17 @@ class UserController {
       }
   
 
-      async updateprofile({request}){
-        console.log("pic");  
-
-        const id = request.input('id');
-          const user = await User.query().where('id',id).first()
+      async updateprofile({request,response}){
+       const id = request.input('id');
+           const user = await User.query().where('id',id).first()
           const profilePic = request.file('image', {
             types: ['image'],
             size: '2mb'
           })
-          console.log(profilePic)
           const image = new Date().getTime()+'.'+profilePic.subtype
           await profilePic.move(Helpers.publicPath('uploads/blogPicture'), {
             name: image,
            })     
-    console.log(image);
           let {
           name,
           email,
@@ -109,15 +104,13 @@ class UserController {
       } = request.all(); 
       user.name = name;
       user.email = email;
-      user.gender = gender;
       user.mobile = mobile;
-      user.dob = dob;
-      user.image = image
-        console.log(user); 
+      user.gender = gender;
+      user.image = image ;
+      user.dob = dob;    
         user.save();
-        const token =  Encryption.encrypt(user)
-         
-        return(token)   
+       const token =  Encryption.encrypt(user)
+        return response.send(token)   
         
       }
 
