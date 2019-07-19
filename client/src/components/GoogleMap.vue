@@ -2,18 +2,22 @@
   <div id='map' style='width:100%; height: 90vh;' >
     <gmap-map
       :center="center"
-      :zoom="17"
+      :zoom="13"
       class="mw-100 h-100"
       @click='test'
       :options="{scrollwheel: true}"
+        type="satellite"
+        name="satellite-example"
+   
     >
       <gmap-marker
         :key="index"
         v-for="(m, index) in markers"
         :position="m.position"
         @click="center=m.position"
-      
-      ></gmap-marker>
+       :icon="{ url: require('./../../public/marker_red.png')}"
+      >
+      </gmap-marker>
     </gmap-map>
     <br><br><br><br><br><br><br>
     <div v-for="address in formatedAddresses" :key="address">{{ address }}</div>  
@@ -21,6 +25,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+import router from '../router'
 export default {
   name: "GoogleMap",
   data() {
@@ -34,12 +40,14 @@ export default {
        formatedAddresses: [],
        lat: null,
        lng: null,
-       flag: false
+       flag: false,
+       data:[],
+        image : 'https://bugs.city/web/images/marker_red.png'
+
     };
   },
 
-  mounted() {
-   
+  mounted() {   
     this.geolocate();
   },
 
@@ -50,28 +58,17 @@ export default {
     },
     addMarker() {
         
-        const marker = {
-          lat: this.lat,
-          lng: this.lng
-        };
-        if(this.flag == false)
+      
+        for(var i=0; i<this.data.length;i++)
         {
-        this.markers.push({ position: marker });
-        this.places.push(this.currentPlace);
-       // this.center = marker;
-        this.currentPlace = null;
-        this.flag = true ;
+          this.markers.push({position:this.data[i],})
         }
-        else
-        {
-          this.markers.pop();
-          this.places.pop();
-           this.markers.push({ position: marker });
-        this.places.push(this.currentPlace);
+       // this.markers.push({ position: marker });
+        //this.places.push(this.currentPlace);
+        
       //  this.center = marker;
-        this.currentPlace = null;
-        this.flag = true ;
-        }
+       // this.currentPlace = null;
+ 
     },
     geolocate: function() {
       
@@ -81,35 +78,27 @@ export default {
           lng: position.coords.longitude
         };
       });
-    console.log(this.center.lng)
+          this.getAllBugsLocation();
     },
     test:function(markerobject){
-      console.log('df');
-      console.log(markerobject.latLng.lat());
-      console.log(markerobject.latLng.lng());
       var location = { 
                 lat : parseFloat(markerobject.latLng.lat()),
                 lng : parseFloat(markerobject.latLng.lng())
             } ;
             this.lat =  parseFloat(markerobject.latLng.lat());
             this.lng =  parseFloat(markerobject.latLng.lng());
-  this.addMarker();
-        //   var map = new google.maps.Map(document.getElementById('map'), {
-        //   zoom: 4,
-        //   center: {lat:  markerobject.latLng.lat(), lng: markerobject.latLng.lng() }
-        // });
   
-      //     var geocoder= new google.maps.Geocoder();
-      // geocoder.geocode({'location': location}, function (results, status) {
-      //   if (status === 'OK') {
-      //     if (results[1]) {
-      //       alert(results[1].formatted_address)
-      //     } else {
-      //       window.alert('No results found')
-      //     }
-      //   }
-      // })
-    }
+    },
+    async getAllBugsLocation(){
+    await axios
+      .get('http://127.0.0.1:3333/getAllBugsLocation')
+      .then( async (data) => {
+        this.data = data.data;
+        this.addMarker();
+         })
+      .catch(error => console.log(error)) 
   }
+  },
+  
 };
 </script>

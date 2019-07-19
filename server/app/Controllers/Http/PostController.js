@@ -9,6 +9,20 @@ const Helpers = use('Helpers')
 const fs = require('fs');
 
 class PostController {
+  async getAllBugsLocation({response}){
+     const post = await Post.all();
+     var temp = post.toJSON()
+     var arr =[]
+     for(var i=0;i<temp.length;i++)
+     { 
+      let marker = {
+        lat: temp[i].lat,
+        lng: temp[i].lng
+      };
+      arr.push(marker);
+     }
+    return response.send(arr);
+  }
     async addPost({request}){     
          const token = request.input('token')        
          const description = request.input('description')

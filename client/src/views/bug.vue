@@ -188,7 +188,6 @@ export default {
     },
     beforeMount() {
         this.getData();
-        console.log(this.id);
     },
     methods: {
     async getData(){
@@ -283,8 +282,7 @@ export default {
                 }
          let url = 'http://127.0.0.1:3333/commentPost'
          await HTTP().post(url ,data ,options).then((data)=>{
-                console.log(data.data);
-                this.likes = data.data.count ;                  
+                                
      })      
      this.viewComment(); 
     },
