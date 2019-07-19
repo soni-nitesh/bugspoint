@@ -87,7 +87,7 @@ class UserController {
       async updateprofile({request,response}){
        const id = request.input('id');
            const user = await User.query().where('id',id).first()
-          const profilePic = request.file('image', {
+     if(request.file('image')){     const profilePic = request.file('image', {
             types: ['image'],
             size: '2mb'
           })
@@ -111,7 +111,25 @@ class UserController {
         user.save();
        const token =  Encryption.encrypt(user)
         return response.send(token)   
-        
+    }
+    else{
+      let {
+        name,
+        email,
+        gender,
+        dob,
+        mobile
+    } = request.all(); 
+    user.name = name;
+    user.email = email;
+    user.mobile = mobile;
+    user.gender = gender;
+    user.dob = dob;    
+      user.save();
+     const token =  Encryption.encrypt(user)
+      return response.send(token)   
+  
+    }
       }
 
      }

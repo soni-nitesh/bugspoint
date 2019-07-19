@@ -26,14 +26,16 @@
         </v-btn>
       </template>
       <v-list>
-        <v-list-tile to="/profile" route>
-          <v-list-tile-title > <v-icon>face</v-icon> Profile</v-list-tile-title>
+        <v-list-tile @click="profile">
+           <v-list-tile-action><v-icon>face</v-icon></v-list-tile-action>
+          <v-list-tile-title >Profile</v-list-tile-title>
         </v-list-tile>
-                <v-list-tile @click="profile">
-          <v-list-tile-title><v-icon>bug_report</v-icon>My Bugs</v-list-tile-title>
+                <v-list-tile @click="profile"> <v-list-tile-action><v-icon>bug_report</v-icon></v-list-tile-action>
+          <v-list-tile-title>My Bugs</v-list-tile-title>
         </v-list-tile>
-                <v-list-tile>
-          <v-list-tile-title @click="logout_function"> <v-icon>account_box</v-icon>Logout</v-list-tile-title>
+                <v-list-tile @click="logout_function">
+                   <v-list-tile-action><v-icon>account_box</v-icon></v-list-tile-action>
+          <v-list-tile-title>Logout</v-list-tile-title>
         </v-list-tile>
       </v-list>
     </v-menu>
@@ -53,18 +55,14 @@
             <v-toolbar flat>
             <v-list>
                 <v-list-tile>
-                <a href="/">
+                <v-list-tile-action><v-icon>bug_report</v-icon></v-list-tile-action>              
                 <v-list-tile-title class="title">
-                <v-icon>bug_report</v-icon>
                     Bug's point
-                </v-list-tile-title> </a>
+                </v-list-tile-title>
 
                 </v-list-tile>
             </v-list>
             </v-toolbar>
-
-            <v-divider></v-divider>
-
             <v-list dense class="pt-0">
             <v-list-tile
                 v-for="item in items"
@@ -85,7 +83,6 @@
     </v-navigation-drawer>
     <v-navigation-drawer v-if="logout"
             v-model="drawer"
-
             absolute
             temporary
            :width="250"
@@ -93,15 +90,13 @@
             <v-toolbar flat>
             <v-list>
                 <v-list-tile>
+                <v-list-tile-action><v-icon>bug_report</v-icon></v-list-tile-action>              
                 <v-list-tile-title class="title">
-                  <a href="/">
-                  <v-icon>bug_report</v-icon>  Bug's point </a>
+                    Bug's point
                 </v-list-tile-title>
                 </v-list-tile>
             </v-list>
             </v-toolbar>
-
-            <v-divider></v-divider>
 
             <v-list dense class="pt-0">
             <v-list-tile

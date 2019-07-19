@@ -39,9 +39,9 @@
           right
           top
         >
-          <v-text icon class='text-none'> By : {{data.user_name}}</v-text>
+          <h6 icon class='text-none'> By : {{data.user_name}}</h6>
         </v-btn>
-        <div class="font-weight-light grey--text subheading mb-2"><p>{{date}}</p></div>
+
         <h6 class="subheading font-weight-light cyan--text mb-2">{{data.description}}</h6>
         <div class="font-weight-light title mb-2">
         {{data.category}}

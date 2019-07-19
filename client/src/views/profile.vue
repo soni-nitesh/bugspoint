@@ -134,6 +134,17 @@
         </v-card>
         <v-card>
         <v-flex pa-4 md9 xs12 v-if="profile" >
+    <v-container v-if="pdata">
+         <v-alert
+      v-model="alert"
+      dismissible
+      color="success"
+      icon="check_circle"
+      outline
+      type="success"
+    >
+      Profile Successfully Updated.
+    </v-alert></v-container>
           <v-subheader>Edit Profile</v-subheader>
            <v-form 
            ref="form"
@@ -189,7 +200,7 @@
 						@change="onFilePicked">
 				</v-flex>
 
-  <button class="btn btn-primary" type="button" @click="sendData">Submit</button>
+ <v-btn color='primary' :loading='loading' type="button" @click="sendData">Update</v-btn>
 </v-form>
         </v-flex>
         </v-card>
@@ -220,7 +231,10 @@ export default {
 		   imageUrl: '',
        imageFile: '',
        image:'',
-       mobile:''
+       mobile:'',
+       pdata: false,
+       loading: false,
+       alert: true,
       }
     },
      created() {
@@ -239,6 +253,7 @@ export default {
         
   })    },
    async sendData(){
+                this.loading = true;
                let data = new FormData()
                  data.append('name', this.name)
                  data.append('email',this.email)
@@ -255,9 +270,13 @@ export default {
                 }
                 
   await HTTP().post(url, data, options).then((data)=>{
-    localStorage.removeItem('token');
-    localStorage.setItem('token',data.data)
-     this.$router.push({name:'home' })
+           localStorage.removeItem('token');
+    if(data.data){
+       localStorage.setItem('token',data.data)
+       setTimeout(() => {this.loading = false,this.pdata = true , this.alert =true;
+       document.body.scrollTop = 0;
+       document.documentElement.scrollTop = 0;}, 2000)
+        }
   })
 },
     goToPost(id){
@@ -290,7 +309,6 @@ export default {
 		
 		onFilePicked (e) {
             this.image = e.target.files[0] ;
-            console.log(this.image);
 			const files = e.target.files
 			if(files[0] !== undefined) {
 				this.imageName = files[0].name
@@ -315,7 +333,6 @@ export default {
         this.$router.push({name:'home'})
       },
       async editprofile(){
-        console.log('test');
         const token =   localStorage.getItem('token');
          let data = new FormData()
           data.append('token',token);
