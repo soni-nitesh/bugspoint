@@ -11,7 +11,7 @@
         v-for="(m, index) in markers"
         :position="m.position"
         @click="center=m.position"
-      
+       :icon="{ url: require('./../../public/marker_red.png')}"
       ></gmap-marker>
     </gmap-map>
     <br><br><br><br><br><br><br>

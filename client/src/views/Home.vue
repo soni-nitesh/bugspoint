@@ -41,7 +41,7 @@
         >
           <v-text icon class='text-none'> By : {{data.user_name}}</v-text>
         </v-btn>
-        <div class="font-weight-light grey--text subheading mb-2"><p>{{date}}</p></div>
+        <div class="font-weight-light grey--text subheading mb-2"><p>{{data.date}}</p></div>
         <h6 class="subheading font-weight-light cyan--text mb-2">{{data.description}}</h6>
         <div class="font-weight-light title mb-2">
         {{data.category}}
