@@ -7,6 +7,7 @@
                  <GoogleMap style='height:90vh;' v-if='flag' class='w-95 mx-auto'/>
              </v-flex>
              <!-- cards showing details -->
+             
              <v-flex md6 xs12 mt-4 >
                   <v-card
                         max-width="600"
