@@ -282,10 +282,10 @@ export default {
                     }
                 }
          let url = 'http://127.0.0.1:3333/commentPost'
-         await HTTP().post(url ,data ,options).then((data)=>{
-                                
+         await HTTP().post(url ,data ,options).then((data)=>{           
+                     this.viewComment();
+                      this.viewComment();        
      })      
-     this.viewComment(); 
     },
     viewComment(){
         let data = new FormData()         
@@ -298,12 +298,13 @@ export default {
          let url = 'http://127.0.0.1:3333/viewComment'
           HTTP().post(url ,data ,options).then((data)=>{
               this.items = [];
-              this.items.push({ header: 'Comments' });
               for(var i=0;i<data.data.length;i++)
               {
                   this.items.push(data.data[i])
                   this.items.push({ divider: true, inset: true })
-              }                             
+              }  
+                this.items.push({ header: 'Comments' });
+              this.items.reverse();                           
     })
     }
 }

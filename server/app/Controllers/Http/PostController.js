@@ -152,14 +152,11 @@ class PostController {
       let comment = await Comment.findBy('post_id',post_id);
       var data ;
      
-      if(decrypted.image)
-      {
+
+      
        data  = {'userId':user_id,'comment':commentText,'userName':decrypted.name,'avatar':'http://127.0.0.1:3333/uploads/blogPicture/'+decrypted.image} ;
-      }
-      else
-      {
-      data  = {'userId':user_id,'comment':commentText,'userName':decrypted.name,'avatar':'https://steemitimages.com/p/3HaJVw3AYyXBPPdfDwZuiZRFoYNWo5YFpjHs9b2Qx36AHvcSRbrj8zZWXz3iU5H1ob75cM844F6bQkhQDYpRmSYpbU5RE5xQLeCf5yg?format=match&mode=fit&width=640'} ;
-      }
+      
+
       var temp = JSON.parse(comment.comment);
       temp.push(data);
       comment.comment = JSON.stringify(temp);

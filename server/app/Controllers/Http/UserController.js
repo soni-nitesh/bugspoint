@@ -14,7 +14,7 @@ class UserController {
     }
     
     const validation = await validate(request.all(), rules)
-
+  
     if (validation.fails()) {
       session
         .withErrors(validation.messages())
@@ -29,12 +29,13 @@ class UserController {
       password,
       mobile
   } = request.all(); 
-    
+    const image = 'profile.png';
   const user = await User.create({
      name,
      email,
      mobile,
-     password
+     password,
+     image
  }); 
     user.save();
 
